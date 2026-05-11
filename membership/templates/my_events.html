@@ -1,0 +1,371 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}My Events | Membership Portal{% endblock %}
+
+{% block content %}
+<div class="pcoded-content">
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">My Events</h5>
+                        <p class="m-b-0">Events you have registered for</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'membership:dashboard' %}"><i class="fa fa-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{% url 'membership:my events' %}">My Events</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    
+                    
+                    
+                    <!-- MY REGISTERED EVENTS SECTION -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fa fa-calendar-check-o"></i> My Registered Events</h5>
+                                </div>
+                                <div class="card-block">
+                                    
+                                    <!-- FILTER SECTION -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <form method="get" class="form-inline">
+                                                <div class="row w-100">
+                                                    <div class="col-md-3 mb-2">
+                                                        <input type="text" name="search" class="form-control form-control-sm w-100" 
+                                                               placeholder="Search event name or location..." 
+                                                               value="{{ search_query|default:'' }}">
+                                                    </div>
+                                                    <div class="col-md-2 mb-2">
+                                                        <select name="status" class="form-control form-control-sm w-100">
+                                                            <option value="">All Status</option>
+                                                            <option value="CONFIRMED" {% if status_filter == 'CONFIRMED' %}selected{% endif %}>Confirmed</option>
+                                                            <option value="PENDING" {% if status_filter == 'PENDING' %}selected{% endif %}>Pending</option>
+                                                            <option value="ATTENDED" {% if status_filter == 'ATTENDED' %}selected{% endif %}>Attended</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 mb-2">
+                                                        <select name="event_type" class="form-control form-control-sm w-100">
+                                                            <option value="">All Events</option>
+                                                            <option value="upcoming" {% if event_type_filter == 'upcoming' %}selected{% endif %}>Upcoming Events</option>
+                                                            <option value="past" {% if event_type_filter == 'past' %}selected{% endif %}>Past Events</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-2">
+                                                        <select name="year" class="form-control form-control-sm w-100">
+                                                            <option value="">All Years</option>
+                                                            {% for year in available_years %}
+                                                                <option value="{{ year }}" {% if year_filter|add:"0" == year %}selected{% endif %}>{{ year }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 mb-2">
+                                                        <button type="submit" class="btn btn-primary btn-sm w-100">
+                                                            <i class="fa fa-search"></i> Filter
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- TABLE -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Event Name</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Location</th>
+                                                    <th>Guests</th>
+                                                    <th>Reg. Date</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for reg in page_obj %}
+                                                <tr>
+                                                    <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+                                                    <td>
+                                                        <strong>{{ reg.event.title }}</strong>
+                                                        {% if reg.event.description %}
+                                                            <br><small class="text-muted">{{ reg.event.description|truncatechars:40 }}</small>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ reg.event.event_date|date:"d M Y" }}</td>
+                                                    <td>{{ reg.event.time|time:"g:i A" }}</td>
+                                                    <td><i class="fa fa-map-marker"></i> {{ reg.event.location }}</td>
+                                                    <td class="text-center">{{ reg.guests }} </td>
+                                                    <td>{{ reg.registration_date|date:"d M Y" }} </td>
+                                                    <td>
+                                                        {% if reg.status == 'CONFIRMED' %}
+                                                            <span class="badge badge-success">Confirmed</span>
+                                                        {% elif reg.status == 'PENDING' %}
+                                                            <span class="badge badge-warning">Pending</span>
+                                                        {% elif reg.status == 'ATTENDED' %}
+                                                            <span class="badge badge-primary">Attended</span>
+                                                        {% else %}
+                                                            <span class="badge badge-secondary">{{ reg.status }}</span>
+                                                        {% endif %}
+                                                     </td>
+                                                    <td>
+                                                        {% if reg.status == 'CONFIRMED' and reg.event.event_date >= today %}
+                                                            <button class="btn btn-warning btn-sm" onclick="editRegistration({{ reg.id }}, '{{ reg.event.title|escapejs }}', {{ reg.guests }}, '{{ reg.phone|escapejs }}')">
+                                                                <i class="fa fa-edit"></i> Edit
+                                                            </button>
+                                                            <button class="btn btn-danger btn-sm" onclick="cancelRegistrationAlert({{ reg.id }}, '{{ reg.event.title|escapejs }}')">
+                                                                <i class="fa fa-times"></i> Cancel
+                                                            </button>
+                                                        {% elif reg.status == 'ATTENDED' and reg.event.file %}
+                                                            <button class="btn btn-info btn-sm" onclick="viewCertificate({{ reg.id }}, '{{ reg.event.title|escapejs }}')">
+                                                                <i class="fa fa-download"></i> Certificate
+                                                            </button>
+                                                        {% elif reg.status == 'ATTENDED' %}
+                                                            <span class="text-muted small">Completed</span>
+                                                        {% else %}
+                                                            <span class="text-muted small">-</span>
+                                                        {% endif %}
+                                                     </td>
+                                                 </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <td colspan="9" class="text-center text-muted py-4">
+                                                        <i class="fa fa-calendar-times-o fa-3x"></i>
+                                                        <p class="mt-2">You haven't registered for any events yet.</p>
+                                                        <a href="{% url 'membership:upcoming event' %}" class="btn btn-primary btn-sm">Browse Events</a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <!-- PAGINATION -->
+                                    {% if page_obj.has_other_pages %}
+                                    <div class="text-center mt-3">
+                                        <nav>
+                                            <ul class="pagination justify-content-center">
+                                                {% if page_obj.has_previous %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            <i class="fa fa-angle-double-left"></i> First
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            <i class="fa fa-angle-left"></i> Previous
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% for num in page_obj.paginator.page_range %}
+                                                    {% if page_obj.number == num %}
+                                                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">{{ num }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if page_obj.has_next %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            Next <i class="fa fa-angle-right"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            Last <i class="fa fa-angle-double-right"></i>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                        <div class="text-muted small mt-2">
+                                            Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} registrations
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Form (hidden) -->
+<form method="post" action="{% url 'membership:cancel_registration' %}" id="cancelForm" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" name="registration_id" id="cancelRegistrationId">
+</form>
+
+<!-- Edit Registration Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h6 class="m-0"><i class="fa fa-edit"></i> Edit Registration</h6>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <form method="post" action="{% url 'membership:edit_registration' %}">
+                {% csrf_token %}
+                <div class="modal-body p-3">
+                    <input type="hidden" name="registration_id" id="editRegistrationId">
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Event Name</label>
+                        <input type="text" class="form-control form-control-sm" id="editEventName" readonly>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Phone Number</label>
+                        <input type="tel" class="form-control form-control-sm" name="phone" id="editPhone" required>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Number of Guests (Max 5)</label>
+                        <input type="number" class="form-control form-control-sm" name="guests" id="editGuests" min="0" max="5" required>
+                    </div>
+                </div>
+                <div class="modal-footer py-2">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Update Registration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Certificate Modal -->
+<div class="modal fade" id="certificateModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white py-2">
+                <h6 class="m-0"><i class="fa fa-certificate"></i> Event Certificate</h6>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <i class="fa fa-file-pdf-o" style="font-size: 48px; color: #dc3545;"></i>
+                <h5 id="certEventName" class="mt-2"></h5>
+                <p class="text-muted small">Certificate of Participation</p>
+                <div class="alert alert-success py-1 px-2 small mt-2">
+                    <i class="fa fa-check-circle"></i> You have successfully completed this event
+                </div>
+            </div>
+            <div class="modal-footer py-2">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger btn-sm" id="downloadCertBtn">
+                    <i class="fa fa-download"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+var currentCertificateUrl = '';
+
+function editRegistration(registrationId, eventName, guests, phone) {
+    document.getElementById('editRegistrationId').value = registrationId;
+    document.getElementById('editEventName').value = eventName;
+    document.getElementById('editGuests').value = guests;
+    document.getElementById('editPhone').value = phone;
+    $('#editModal').modal('show');
+}
+
+function cancelRegistrationAlert(registrationId, eventName) {
+    Swal.fire({
+        title: 'Cancel Registration?',
+        text: 'Are you sure you want to cancel registration for "' + eventName + '"?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, cancel it!',
+        cancelButtonText: 'No, keep it',
+        width: '380px'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('cancelRegistrationId').value = registrationId;
+            document.getElementById('cancelForm').submit();
+        }
+    });
+}
+
+function viewCertificate(registrationId, eventName) {
+    document.getElementById('certEventName').innerText = eventName;
+    currentCertificateUrl = '/membership/download-certificate/' + registrationId + '/';
+    $('#certificateModal').modal('show');
+}
+
+function downloadCert() {
+    if (currentCertificateUrl) {
+        window.open(currentCertificateUrl, '_blank');
+    }
+}
+
+if (document.getElementById('downloadCertBtn')) {
+    document.getElementById('downloadCertBtn').addEventListener('click', downloadCert);
+}
+
+// SweetAlert for Django messages
+{% if messages %}
+    {% for message in messages %}
+        Swal.fire({
+            icon: '{% if message.tags == "success" %}success{% elif message.tags == "error" %}error{% else %}info{% endif %}',
+            title: '{% if message.tags == "success" %}Success!{% elif message.tags == "error" %}Error!{% else %}Info{% endif %}',
+            text: '{{ message }}',
+            timer: 3000,
+            width: '350px',
+            showConfirmButton: true
+        });
+    {% endfor %}
+{% endif %}
+</script>
+
+<style>
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    .badge {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    .btn-sm {
+        padding: 3px 8px;
+        font-size: 11px;
+        margin: 0 2px;
+    }
+    .pagination .page-link {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+</style>
+{% endblock %}

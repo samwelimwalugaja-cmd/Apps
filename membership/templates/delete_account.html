@@ -1,0 +1,147 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Delete Account</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header bg-danger text-white py-2">
+                                                          <h5 class="text-white"><i class="fa fa-user-circle-o"></i> My Profile</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      
+
+                          
+        <div class="card-block p-3">
+        <!-- Warning -->
+        <div class="alert alert-danger py-2 px-3 small mb-2">
+            <i class="fa fa-warning"></i> 
+            <strong>Permanent Action!</strong> This process cannot be undone.
+        </div>
+
+        <!-- Delete Form -->
+        <form method="post" id="deleteForm" onsubmit="return validateDelete()">
+            {% csrf_token %}
+            
+            <!-- Terms Box - maneno yameongezwa -->
+            <div class="form-group mb-2">
+                <label class="small fw-bold mb-1">Terms & Conditions</label>
+                <div class="terms-box p-2" style="border:1px solid #ddd; height:160px; overflow-y:scroll; background:#f9f9f9; font-size:11px; line-height:1.4;">
+                    <p class="mb-1"><strong>HEYCG Account Deletion Terms & Conditions</strong></p>
+                    <p class="mb-1">By deleting your HEYCG account, you acknowledge and agree to the following:</p>
+                    
+                    <ol class="ps-3 mb-1">
+                        <li><strong>Permanent Deletion:</strong> Your account and all associated data will be permanently deleted from our systems.</li>
+                        <li><strong>No Recovery:</strong> Once deleted, your account cannot be recovered, restored, or reactivated for any reason.</li>
+                        <li><strong>Loss of Membership Benefits:</strong> You will lose all membership benefits including volunteer hours, donation records, event participation history, and community recognition.</li>
+                        <li><strong>Outstanding Obligations:</strong> Any pending donations, pledges, or commitments must be fulfilled before account deletion is processed.</li>
+                        <li><strong>Data Retention Policy:</strong> Some anonymized data may be retained for statistical analysis, legal compliance, and audit purposes.</li>
+                        <li><strong>Re-registration:</strong> You may register a new account in the future, but previous data, history, and achievements will not be restored.</li>
+                        <li><strong>Backup Responsibility:</strong> You confirm that you have backed up any important information, receipts, or certificates before proceeding.</li>
+                        <li><strong>Irreversible Action:</strong> This action is final and irreversible. No refunds will be issued for any donations made.</li>
+                    </ol>
+                    
+                    <p class="text-danger mb-0 mt-1"><strong>⚠️ Please read carefully. This action is permanent and cannot be reversed.</strong></p>
+                </div>
+            </div>
+
+            <!-- Agreement Checkbox -->
+            <div class="form-group mb-2">
+                <div class="checkbox-fade fade-in-primary">
+                    <label class="check-task small">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="cr"><i class="cr-icon fa fa-check txt-default"></i></span>
+                        <strong>I have read and agree to the Terms & Conditions above</strong>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group mb-2">
+                <label class="small mb-1"><i class="fa fa-lock"></i> Confirm Password</label>
+                <input type="password" class="form-control form-control-sm" id="confirmPassword" 
+                       placeholder="Enter your password to verify identity" required>
+            </div>
+
+            <!-- Type DELETE -->
+            <div class="form-group mb-3">
+                <label class="small mb-1">Type <strong class="text-danger">DELETE</strong> to confirm</label>
+                <input type="text" class="form-control form-control-sm" id="confirmDelete" 
+                       placeholder="Type DELETE in capital letters" required>
+                <small class="text-muted" style="font-size: 10px;">Type the word DELETE to confirm account deletion</small>
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-right">
+                <a href="{% url 'membership:dashboard' %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-arrow-left"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-danger btn-sm" id="deleteBtn">
+                    <i class="fa fa-trash"></i> Permanently Delete Account
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+{% endblock %}

@@ -1,0 +1,679 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>HEYCG | Complete Your Profile - Become Active Member</title>
+  <link rel="icon" href="{% static 'assets/images/favicon-01.png' %}" type="image/x-icon">
+  <!-- Bootstrap 5 CSS + Icons + Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #eef2f5;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .profile-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Navbar */
+    .navbar-custom {
+      background: white;
+      border-radius: 1rem;
+      padding: 0.6rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, #0a58ca, #764ba2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* User profile badge with dropdown */
+    .user-dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .user-badge {
+      background: #f8f9fa;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    
+    .user-badge:hover {
+      background: #e9ecef;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0a58ca, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.7rem;
+    }
+    
+    /* Dropdown Menu - Logout as link */
+    .profile-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      min-width: 140px;
+      z-index: 1000;
+      overflow: hidden;
+      display: none;
+    }
+    
+    .profile-dropdown.show {
+      display: block;
+      animation: fadeIn 0.15s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .logout-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.6rem 1rem;
+      text-decoration: none;
+      color: #dc3545;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    
+    .logout-link:hover {
+      background: #fff5f5;
+      color: #dc3545;
+    }
+    
+    .logout-link i {
+      font-size: 0.9rem;
+    }
+
+    /* Main Card */
+    .profile-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+
+    /* Header Section */
+    .success-header {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      padding: 1.5rem;
+      text-align: center;
+      color: white;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      animation: bounce 0.5s ease;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Form Section */
+    .form-section {
+      padding: 2rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #0f172a;
+      margin-bottom: 0.3rem;
+    }
+
+    .form-control, .form-select, .form-textarea {
+      border-radius: 0.75rem;
+      border: 1.5px solid #e2e8f0;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .form-control:focus, .form-select:focus, textarea:focus {
+      border-color: #0a58ca;
+      box-shadow: 0 0 0 3px rgba(10,88,202,0.2);
+      outline: none;
+    }
+
+    /* Validation error & success styles */
+    .form-control.error-input, .form-select.error-input, textarea.error-input {
+      border-color: #dc3545 !important;
+      background-color: #fff8f8;
+    }
+
+    .form-control.success-input, .form-select.success-input, textarea.success-input {
+      border-color: #198754 !important;
+      background-color: #f8fff9;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 0.7rem;
+      margin-top: 0.25rem;
+      display: block;
+      font-weight: 500;
+    }
+
+    .form-control[readonly] {
+      background-color: #f8fafc;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #0a58ca, #764ba2);
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 0.9rem;
+      border-radius: 60px;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(10,88,202,0.3);
+    }
+
+    .info-box {
+      background: #e8f4fd;
+      border-radius: 0.75rem;
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.75rem;
+      color: #0a58ca;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0.8rem;
+      }
+      .form-section {
+        padding: 1.2rem;
+      }
+    }
+
+    .toast-custom {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1200;
+    }
+  </style>
+</head>
+<body>
+
+<div class="profile-container">
+  <!-- Navbar with Profile Dropdown -->
+  <div class="navbar-custom d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+      <i class="fas fa-hands-helping" style="color: #0a58ca; font-size: 1.2rem;"></i>
+      <span class="logo">HEYCG</span>
+    </div>
+    
+    <div class="user-dropdown" id="userDropdown">
+      <div class="user-badge" onclick="toggleDropdown()">
+        <div class="user-avatar">
+          {% if member.profile_picture %}
+              <img src="{{ member.profile_picture.url }}" alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%;">
+          {% else %}
+              <i class="fas fa-user" style="font-size: 0.7rem;"></i>
+          {% endif %}
+        </div>
+        <div>
+          <div class="fw-semibold" style="font-size: 0.7rem;" id="userNameDisplay">{{ member.first_name }} {{ member.last_name }}</div>
+          <div class="text-muted" style="font-size: 0.6rem;">Complete Profile</div>
+        </div>
+        <i class="fas fa-chevron-down" style="font-size: 0.6rem;"></i>
+      </div>
+      <div class="profile-dropdown" id="dropdownMenu">
+        <a href="{% url 'membership:logout' %}" class="logout-link" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Profile Card -->
+  <div class="profile-card">
+    <div class="success-header">
+      <i class="fas fa-check-circle success-icon"></i>
+      <h3 class="mt-2 mb-1 fw-bold">Congratulations {{ member.first_name | title }}!</h3>
+      <p class="mb-0 opacity-90">Your membership fee has been approved by admin</p>
+    </div>
+
+    <div class="form-section">
+      <div class="info-box">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Almost there!</strong> Please complete your profile information below to become an active member of HEYCG.
+      </div>
+
+      <!-- Django form - with client-side validations -->
+      <form method="post" id="profileForm" novalidate>
+        {% csrf_token %}
+        
+        <!-- Display non-field errors from Django -->
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger alert-sm mb-3">
+            {% for error in form.non_field_errors %}
+              <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="row g-3">
+          <!-- First Name -->
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-user text-primary me-1"></i> First Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="first_name" id="firstName" value="{{ form.first_name.value|default:member.first_name }}" readonly>
+            <div class="error-message" id="firstNameError"></div>
+            {% if form.first_name.errors %}
+              <div class="error-message">{{ form.first_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Middle Name (optional, no validation required) -->
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-user text-primary me-1"></i> Middle Name</label>
+            <input type="text" class="form-control" name="middle_name" id="middleName" value="{{ form.middle_name.value|default:'' }}">
+          </div>
+
+          <!-- Last Name -->
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-user text-primary me-1"></i> Last Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="last_name" id="lastName" value="{{ form.last_name.value|default:member.last_name }}" readonly>
+            <div class="error-message" id="lastNameError"></div>
+            {% if form.last_name.errors %}
+              <div class="error-message">{{ form.last_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Gender -->
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-venus-mars text-primary me-1"></i> Gender <span class="text-danger">*</span></label>
+            <select class="form-select" name="gender" id="gender">
+              <option value="" {% if not form.gender.value %}selected{% endif %} disabled>{{ form.gender.value|default:'Select gender' }}</option>
+              <option value="Female" {% if form.gender.value == 'Female' %}selected{% endif %}>Female</option>
+              <option value="Male" {% if form.gender.value == 'Male' %}selected{% endif %}>Male</option>
+            </select>
+            <div class="error-message" id="genderError"></div>
+            {% if form.gender.errors %}
+              <div class="error-message">{{ form.gender.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Phone Number -->
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-phone text-primary me-1"></i> Phone Number <span class="text-danger">*</span></label>
+            <input type="tel" class="form-control" name="phone_number" id="phone" value="{{ form.phone_number.value|default:'' }}" placeholder="e.g., 0712345678">
+            <div class="error-message" id="phoneError"></div>
+            {% if form.phone_number.errors %}
+              <div class="error-message">{{ form.phone_number.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Email (readonly from member) -->
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-envelope text-primary me-1"></i> Email Address <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" name="email" value="{{ member.email }}" id="email" readonly>
+          </div>
+
+          <!-- Address Field -->
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-home text-primary me-1"></i> Address <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="address" id="address" value="{{ form.address.value|default:'' }}" placeholder="Enter your address">
+            <div class="error-message" id="addressError"></div>
+            {% if form.address.errors %}
+              <div class="error-message">{{ form.address.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Why HEYCG? -->
+          <div class="col-12">
+            <label class="form-label"><i class="fas fa-heart text-primary me-1"></i> Why did you choose to join HEYCG? <span class="text-danger">*</span></label>
+            <textarea class="form-control" name="whyhycg" id="whyHeycg" rows="3" placeholder="Tell us why you want to be part of our charity community...">{{ form.whyhycg.value|default:'' }}</textarea>
+            <div class="error-message" id="whyHeycgError"></div>
+            {% if form.whyhycg.errors %}
+              <div class="error-message">{{ form.whyhycg.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-check-circle me-2"></i> Complete Registration & Activate Membership
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="text-center mt-3">
+    <small style="color: #6c757d; font-size: 0.6rem;">
+      <i class="fas fa-headset"></i> Need help? Contact support at <strong>support@heycg.org</strong>
+    </small>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-custom">
+  <div class="toast align-items-center text-white bg-success border-0" id="formToast" role="alert" data-bs-autohide="true" data-bs-delay="4000">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMessage" style="font-size: 0.75rem;"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ========================
+  // Client-side Validations for Profile Form
+  // All errors appear below respective fields with red border
+  // ========================
+  
+  // Helper functions
+  function clearFieldError(fieldId, errorId) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(errorId);
+    if (field) {
+      field.classList.remove('error-input', 'success-input');
+    }
+    if (errorDiv) {
+      errorDiv.innerText = '';
+    }
+  }
+
+  function showFieldError(fieldId, errorId, message) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(errorId);
+    if (field) {
+      field.classList.remove('success-input');
+      field.classList.add('error-input');
+    }
+    if (errorDiv) {
+      errorDiv.innerText = message;
+    }
+  }
+
+  function showFieldSuccess(fieldId, errorId) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(errorId);
+    if (field) {
+      field.classList.remove('error-input');
+      field.classList.add('success-input');
+    }
+    if (errorDiv) {
+      errorDiv.innerText = '';
+    }
+  }
+
+  // Validate First Name: letters only, 2-20 characters
+  function validateFirstName() {
+    const field = document.getElementById('firstName');
+    const value = field ? field.value.trim() : '';
+    if (value === '') {
+      showFieldError('firstName', 'firstNameError', 'First name is required.');
+      return false;
+    }
+    const nameRegex = /^[A-Za-z\u00C0-\u00FF\s]{2,20}$/;
+    if (!nameRegex.test(value)) {
+      showFieldError('firstName', 'firstNameError', 'Only letters (2-20 characters, no numbers/special chars).');
+      return false;
+    }
+    showFieldSuccess('firstName', 'firstNameError');
+    return true;
+  }
+
+  // Validate Last Name: letters only, 2-20 characters
+  function validateLastName() {
+    const field = document.getElementById('lastName');
+    const value = field ? field.value.trim() : '';
+    if (value === '') {
+      showFieldError('lastName', 'lastNameError', 'Last name is required.');
+      return false;
+    }
+    const nameRegex = /^[A-Za-z\u00C0-\u00FF\s]{2,20}$/;
+    if (!nameRegex.test(value)) {
+      showFieldError('lastName', 'lastNameError', 'Only letters (2-20 characters, no numbers/special chars).');
+      return false;
+    }
+    showFieldSuccess('lastName', 'lastNameError');
+    return true;
+  }
+
+  // Validate Gender: must select
+  function validateGender() {
+    const field = document.getElementById('gender');
+    const value = field ? field.value : '';
+    if (value === '' || value === null) {
+      showFieldError('gender', 'genderError', 'Please select your gender.');
+      return false;
+    }
+    showFieldSuccess('gender', 'genderError');
+    return true;
+  }
+
+  // Validate Phone: Tanzanian format (starts with 0, 10-12 digits)
+  function validatePhone() {
+    const field = document.getElementById('phone');
+    let value = field ? field.value.trim() : '';
+    if (value === '') {
+      showFieldError('phone', 'phoneError', 'Phone number is required.');
+      return false;
+    }
+    // Remove any non-digit characters for validation
+    const digitsOnly = value.replace(/\D/g, '');
+    if (digitsOnly.length < 10 || digitsOnly.length > 12) {
+      showFieldError('phone', 'phoneError', 'Phone must have 10-12 digits (e.g., 0712345678).');
+      return false;
+    }
+    if (!digitsOnly.startsWith('0')) {
+      showFieldError('phone', 'phoneError', 'Phone number should start with 0 (e.g., 0712345678).');
+      return false;
+    }
+    showFieldSuccess('phone', 'phoneError');
+    return true;
+  }
+
+  // Validate Address: not empty, at least 5 chars
+  function validateAddress() {
+    const field = document.getElementById('address');
+    const value = field ? field.value.trim() : '';
+    if (value === '') {
+      showFieldError('address', 'addressError', 'Address is required.');
+      return false;
+    }
+    if (value.length < 5) {
+      showFieldError('address', 'addressError', 'Please enter a complete address (min 5 characters).');
+      return false;
+    }
+    if (value.length > 200) {
+      showFieldError('address', 'addressError', 'Address is too long (max 200 chars).');
+      return false;
+    }
+    showFieldSuccess('address', 'addressError');
+    return true;
+  }
+
+  // Validate Why HEYCG: not empty, min 20 chars, max 500
+  function validateWhyHeycg() {
+    const field = document.getElementById('whyHeycg');
+    const value = field ? field.value.trim() : '';
+    if (value === '') {
+      showFieldError('whyHeycg', 'whyHeycgError', 'Please tell us why you chose to join HEYCG.');
+      return false;
+    }
+    if (value.length < 20) {
+      showFieldError('whyHeycg', 'whyHeycgError', 'Please provide more detail (minimum 20 characters).');
+      return false;
+    }
+    if (value.length > 500) {
+      showFieldError('whyHeycg', 'whyHeycgError', 'Maximum 500 characters allowed.');
+      return false;
+    }
+    showFieldSuccess('whyHeycg', 'whyHeycgError');
+    return true;
+  }
+
+  // Attach real-time event listeners
+  const firstNameField = document.getElementById('firstName');
+  if (firstNameField) {
+    firstNameField.addEventListener('input', validateFirstName);
+    firstNameField.addEventListener('blur', validateFirstName);
+  }
+  
+  const lastNameField = document.getElementById('lastName');
+  if (lastNameField) {
+    lastNameField.addEventListener('input', validateLastName);
+    lastNameField.addEventListener('blur', validateLastName);
+  }
+  
+  const genderSelect = document.getElementById('gender');
+  if (genderSelect) {
+    genderSelect.addEventListener('change', validateGender);
+    genderSelect.addEventListener('blur', validateGender);
+  }
+  
+  const phoneField = document.getElementById('phone');
+  if (phoneField) {
+    phoneField.addEventListener('input', function() {
+      // Auto-format: allow only digits
+      let value = this.value.replace(/\D/g, '');
+      if (value.length > 12) value = value.slice(0, 12);
+      this.value = value;
+      validatePhone();
+    });
+    phoneField.addEventListener('blur', validatePhone);
+  }
+  
+  const addressField = document.getElementById('address');
+  if (addressField) {
+    addressField.addEventListener('input', validateAddress);
+    addressField.addEventListener('blur', validateAddress);
+  }
+  
+  const whyField = document.getElementById('whyHeycg');
+  if (whyField) {
+    whyField.addEventListener('input', validateWhyHeycg);
+    whyField.addEventListener('blur', validateWhyHeycg);
+  }
+
+  // Toggle dropdown for logout
+  function toggleDropdown() {
+    const dropdown = document.getElementById('dropdownMenu');
+    if (dropdown) dropdown.classList.toggle('show');
+  }
+  
+  document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('dropdownMenu');
+    const userDropdown = document.getElementById('userDropdown');
+    if (userDropdown && !userDropdown.contains(event.target)) {
+      if (dropdown) dropdown.classList.remove('show');
+    }
+  });
+  
+  // Form submission with full validation
+  const profileForm = document.getElementById('profileForm');
+  if (profileForm) {
+    profileForm.addEventListener('submit', function(event) {
+      const isFirstNameValid = validateFirstName();
+      const isLastNameValid = validateLastName();
+      const isGenderValid = validateGender();
+      const isPhoneValid = validatePhone();
+      const isAddressValid = validateAddress();
+      const isWhyValid = validateWhyHeycg();
+      
+      if (!isFirstNameValid || !isLastNameValid || !isGenderValid || !isPhoneValid || !isAddressValid || !isWhyValid) {
+        event.preventDefault();
+        // Scroll to first error
+        const firstError = document.querySelector('.error-input');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Show toast notification for validation error
+        const toastEl = document.getElementById('formToast');
+        const toastBody = document.getElementById('toastMessage');
+        toastBody.innerHTML = '⚠️ Please fix the errors highlighted in the form.';
+        toastEl.classList.remove('bg-success');
+        toastEl.classList.add('bg-danger');
+        const bsToast = new bootstrap.Toast(toastEl, { delay: 3000 });
+        bsToast.show();
+        return false;
+      }
+      // All validations passed, form will submit to Django
+      return true;
+    });
+  }
+  
+  // Initial validation on page load for fields that may have pre-filled values
+  window.addEventListener('DOMContentLoaded', function() {
+    if (firstNameField && firstNameField.value.trim() !== '') validateFirstName();
+    if (lastNameField && lastNameField.value.trim() !== '') validateLastName();
+    if (genderSelect && genderSelect.value !== '') validateGender();
+    if (phoneField && phoneField.value.trim() !== '') validatePhone();
+    if (addressField && addressField.value.trim() !== '') validateAddress();
+    if (whyField && whyField.value.trim() !== '') validateWhyHeycg();
+    
+    // Check if success parameter from Django redirect
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('profile_complete') === 'success') {
+      const toastEl = document.getElementById('formToast');
+      const toastBody = document.getElementById('toastMessage');
+      toastBody.innerHTML = '✅ Profile completed! You are now an active member. Redirecting...';
+      toastEl.classList.remove('bg-danger');
+      toastEl.classList.add('bg-success');
+      const bsToast = new bootstrap.Toast(toastEl, { delay: 3000 });
+      bsToast.show();
+      setTimeout(() => {
+        window.location.href = "/dashboard/";
+      }, 2500);
+    }
+  });
+</script>
+</body>
+</html>

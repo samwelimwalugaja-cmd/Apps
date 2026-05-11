@@ -1,0 +1,512 @@
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="row">
+                    <!-- Active Charity Activities Table - Left Side -->
+                    <div class="col-xl-8 col-md-12">
+                        <div class="card table-card">
+                            <div class="card-header">
+                                <h5><i class="fa fa-heart m-r-10"></i> Charity Activities</h5>
+                                <div class="card-header-right">
+                                    <!-- Filter Dropdown -->
+                                    <div class="dropdown" style="display: inline-block; margin-right: 10px;">
+                                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <i class="fa fa-filter"></i> Filter
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('all')">All Activities</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('completed')">Completed</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('ongoing')">Ongoing</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('upcoming')">Upcoming</a></li>
+                                        </ul>
+                                    </div>
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                        <li><i class="fa fa-trash close-card"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="charityTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Slogan/Mission</th>
+                                                <th>Location</th>
+                                                <th>Members Arrived</th>
+                                                <th>Budget (TZS)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBody">
+                                            <!-- Data will be loaded by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                    
+                                    <!-- Pagination Controls -->
+                                    <div class="row m-t-20">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_info" id="tableInfo">
+                                                Showing <span id="startRecord">1</span> to <span id="endRecord">5</span> of <span id="totalRecords">0</span> entries
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <div class="dataTables_paginate">
+                                                <ul class="pagination" style="margin: 0;">
+                                                    <li class="paginate_button page-item previous" id="prevBtn">
+                                                        <a href="#" class="page-link">Previous</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item active" id="page1">
+                                                        <a href="#" class="page-link" onclick="goToPage(1)">1</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item" id="page2">
+                                                        <a href="#" class="page-link" onclick="goToPage(2)">2</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item" id="page3">
+                                                        <a href="#" class="page-link" onclick="goToPage(3)">3</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item next" id="nextBtn">
+                                                        <a href="#" class="page-link">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="row">
+                    <!-- Active Charity Activities Table - Left Side (col-xl-8) -->
+                    <div class="col-xl-8 col-md-12">
+                        <div class="card table-card">
+                            <div class="card-header">
+                                <h5><i class="fa fa-heart m-r-10"></i> Charity Activities</h5>
+                                <div class="card-header-right">
+                                    <!-- Filter Dropdown -->
+                                    <div class="dropdown" style="display: inline-block; margin-right: 10px;">
+                                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <i class="fa fa-filter"></i> Filter
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('all')">All Activities</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('completed')">Completed</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('ongoing')">Ongoing</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterTable('upcoming')">Upcoming</a></li>
+                                        </ul>
+                                    </div>
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                        <li><i class="fa fa-trash close-card"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="charityTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Slogan/Mission</th>
+                                                <th>Location</th>
+                                                <th>Members Arrived</th>
+                                                <th>Budget (TZS)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBody">
+                                            <!-- Data will be loaded by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                    
+                                    <!-- Pagination Controls -->
+                                    <div class="row m-t-20">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_info" id="tableInfo">
+                                                Showing <span id="startRecord">1</span> to <span id="endRecord">5</span> of <span id="totalRecords">0</span> entries
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <div class="dataTables_paginate">
+                                                <ul class="pagination" style="margin: 0;">
+                                                    <li class="paginate_button page-item previous" id="prevBtn">
+                                                        <a href="#" class="page-link">Previous</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item active" id="page1">
+                                                        <a href="#" class="page-link" onclick="goToPage(1)">1</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item" id="page2">
+                                                        <a href="#" class="page-link" onclick="goToPage(2)">2</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item" id="page3">
+                                                        <a href="#" class="page-link" onclick="goToPage(3)">3</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item next" id="nextBtn">
+                                                        <a href="#" class="page-link">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Announcements Section - Right Side (col-xl-4) -->
+                    <div class="col-xl-4 col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fa fa-bullhorn m-r-10"></i> Announcements</h5>
+                                <div class="card-header-right">
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                        <li><i class="fa fa-trash close-card"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!-- Announcement 1 -->
+                                <div class="align-middle m-b-25 p-b-15" style="border-bottom: 1px solid #eee;">
+                                    <div class="d-inline-block">
+                                        <span class="label label-danger m-b-10">New</span>
+                                        <h6 class="m-b-5">🎉 Annual Fundraising Gala 2024</h6>
+                                        <p class="text-muted m-b-5 small">Join us on December 15th at Serena Hotel. Let's make a difference together!</p>
+                                        <small class="text-c-blue"><i class="fa fa-clock-o m-r-5"></i> Posted: 2 days ago</small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Announcement 2 -->
+                                <div class="align-middle m-b-25 p-b-15" style="border-bottom: 1px solid #eee;">
+                                    <div class="d-inline-block">
+                                        <span class="label label-success m-b-10">Update</span>
+                                        <h6 class="m-b-5">✅ Clean Water Project Completed</h6>
+                                        <p class="text-muted m-b-5 small">We successfully installed 5 new water wells in Arusha. Thanks to all donors!</p>
+                                        <small class="text-c-blue"><i class="fa fa-clock-o m-r-5"></i> Posted: 5 days ago</small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Announcement 3 -->
+                                <div class="align-middle m-b-25 p-b-15" style="border-bottom: 1px solid #eee;">
+                                    <div class="d-inline-block">
+                                        <span class="label label-warning m-b-10">Volunteer</span>
+                                        <h6 class="m-b-5">🙋 Volunteer Recruitment Drive</h6>
+                                        <p class="text-muted m-b-5 small">We need volunteers for our upcoming medical camp in Mbeya. Sign up now!</p>
+                                        <small class="text-c-blue"><i class="fa fa-clock-o m-r-5"></i> Posted: 1 week ago</small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Announcement 4 -->
+                                <div class="align-middle m-b-25 p-b-15" style="border-bottom: 1px solid #eee;">
+                                    <div class="d-inline-block">
+                                        <span class="label label-primary m-b-10">Event</span>
+                                        <h6 class="m-b-5">📚 Education Sponsorship Drive</h6>
+                                        <p class="text-muted m-b-5 small">Sponsor a child's education for only 50,000 TZS per month. 100+ children waiting!</p>
+                                        <small class="text-c-blue"><i class="fa fa-clock-o m-r-5"></i> Posted: 2 weeks ago</small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Announcement 5 -->
+                                <div class="align-middle m-b-15">
+                                    <div class="d-inline-block">
+                                        <span class="label label-info m-b-10">Report</span>
+                                        <h6 class="m-b-5">📊 Q3 Impact Report Available</h6>
+                                        <p class="text-muted m-b-5 small">Download our quarterly report to see how your contributions are changing lives.</p>
+                                        <small class="text-c-blue"><i class="fa fa-clock-o m-r-5"></i> Posted: 3 weeks ago</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center m-t-20">
+                                    <a href="{% url 'all_announcements' %}" class="b-b-primary text-primary">View all announcements <i class="fa fa-arrow-right m-l-5"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats Card (Bonus) -->
+                        <div class="card m-t-20">
+                            <div class="card-header">
+                                <h5><i class="fa fa-bar-chart m-r-10"></i> My Impact Summary</h5>
+                            </div>
+                            <div class="card-block text-center">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="text-c-green">{{ total_donated|default:"0" }}</h3>
+                                        <small class="text-muted">Total Donated (TZS)</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3 class="text-c-blue">{{ events_attended|default:"0" }}</h3>
+                                        <small class="text-muted">Events Attended</small>
+                                    </div>
+                                </div>
+                                <div class="row m-t-15">
+                                    <div class="col-6">
+                                        <h3 class="text-c-purple">{{ volunteer_hours|default:"0" }}</h3>
+                                        <small class="text-muted">Volunteer Hours</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3 class="text-c-red">{{ lives_impacted|default:"0" }}</h3>
+                                        <small class="text-muted">Lives Impacted</small>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <a href="{% url 'view_profile' %}" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-user-circle-o m-r-5"></i> View Full Profile
+                                    </a>
+                                    <a href="{% url 'edit_profile' %}" class="btn btn-success btn-sm m-l-5">
+                                        <i class="fa fa-edit m-r-5"></i> Edit Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Charity Activities Data
+const charityData = [
+    { slogan: "Feed the Future - Ending Child Hunger", location: "Dar es Salaam", members: 45, budget: 15000000, status: "ongoing" },
+    { slogan: "Clean Water for All", location: "Arusha", members: 32, budget: 25000000, status: "ongoing" },
+    { slogan: "Education Empowerment", location: "Mwanza", members: 28, budget: 18000000, status: "ongoing" },
+    { slogan: "Medical Camp 2024", location: "Mbeya", members: 56, budget: 35000000, status: "completed" },
+    { slogan: "Women in Business", location: "Zanzibar", members: 38, budget: 12000000, status: "completed" },
+    { slogan: "Orphanage Support", location: "Tanga", members: 22, budget: 8000000, status: "ongoing" },
+    { slogan: "Environmental Cleanup", location: "Kilimanjaro", members: 67, budget: 5000000, status: "completed" },
+    { slogan: "Youth Skills Training", location: "Morogoro", members: 41, budget: 9500000, status: "upcoming" },
+    { slogan: "Elderly Care Program", location: "Dodoma", members: 19, budget: 7000000, status: "ongoing" },
+    { slogan: "Disaster Relief Fund", location: "Kigoma", members: 73, budget: 45000000, status: "upcoming" },
+    { slogan: "School Building Project", location: "Lindi", members: 34, budget: 28000000, status: "ongoing" },
+    { slogan: "Health Awareness", location: "Rukwa", members: 29, budget: 6000000, status: "completed" }
+];
+
+let currentPage = 1;
+let rowsPerPage = 5;
+let currentFilter = "all";
+
+// Function to display table with pagination
+function displayTable() {
+    let filteredData = charityData;
+    
+    // Apply filter
+    if (currentFilter !== "all") {
+        filteredData = charityData.filter(item => item.status === currentFilter);
+    }
+    
+    const totalRecords = filteredData.length;
+    const totalPages = Math.ceil(totalRecords / rowsPerPage);
+    
+    // Calculate start and end index
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = Math.min(startIndex + rowsPerPage, totalRecords);
+    
+    // Get data for current page
+    const pageData = filteredData.slice(startIndex, endIndex);
+    
+    // Update table body
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = '';
+    
+    if (pageData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No charity activities found</td></tr>';
+    } else {
+        pageData.forEach(item => {
+            const row = document.createElement('tr');
+            let statusBadge = '';
+            if (item.status === 'ongoing') {
+                statusBadge = '<span class="label label-primary">Ongoing</span>';
+            } else if (item.status === 'completed') {
+                statusBadge = '<span class="label label-success">Completed</span>';
+            } else {
+                statusBadge = '<span class="label label-warning">Upcoming</span>';
+            }
+            
+            row.innerHTML = `
+                <td>${item.slogan}</td>
+                <td><i class="fa fa-map-marker m-r-5 text-c-blue"></i> ${item.location}</td>
+                <td><i class="fa fa-users m-r-5 text-c-green"></i> ${item.members}</td>
+                <td><i class="fa fa-money m-r-5 text-c-purple"></i> ${item.budget.toLocaleString()} TZS</td>
+                <td>${statusBadge}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+    
+    // Update pagination info
+    document.getElementById('startRecord').textContent = totalRecords === 0 ? 0 : startIndex + 1;
+    document.getElementById('endRecord').textContent = endIndex;
+    document.getElementById('totalRecords').textContent = totalRecords;
+    
+    // Update pagination buttons
+    updatePaginationButtons(totalPages);
+}
+
+// Filter function
+function filterTable(filter) {
+    currentFilter = filter;
+    currentPage = 1;
+    displayTable();
+}
+
+// Go to specific page
+function goToPage(page) {
+    let filteredData = charityData;
+    if (currentFilter !== "all") {
+        filteredData = charityData.filter(item => item.status === currentFilter);
+    }
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        displayTable();
+    }
+}
+
+// Update pagination buttons visibility
+function updatePaginationButtons(totalPages) {
+    // Hide all page buttons first
+    for (let i = 1; i <= 3; i++) {
+        const pageBtn = document.getElementById(`page${i}`);
+        if (pageBtn) pageBtn.style.display = 'none';
+    }
+    
+    // Show relevant page buttons
+    if (totalPages === 1) {
+        const page1 = document.getElementById('page1');
+        if (page1) {
+            page1.style.display = 'inline-block';
+            page1.classList.add('active');
+        }
+        const page2 = document.getElementById('page2');
+        if (page2) page2.style.display = 'none';
+        const page3 = document.getElementById('page3');
+        if (page3) page3.style.display = 'none';
+    } else if (totalPages === 2) {
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        if (page1) page1.style.display = 'inline-block';
+        if (page2) page2.style.display = 'inline-block';
+        const page3 = document.getElementById('page3');
+        if (page3) page3.style.display = 'none';
+        
+        // Set active class
+        document.querySelectorAll('.paginate_button.page-item').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        if (currentPage === 1) {
+            document.getElementById('page1')?.classList.add('active');
+        } else {
+            document.getElementById('page2')?.classList.add('active');
+        }
+    } else {
+        // 3 or more pages
+        for (let i = 1; i <= Math.min(3, totalPages); i++) {
+            const pageBtn = document.getElementById(`page${i}`);
+            if (pageBtn) {
+                pageBtn.style.display = 'inline-block';
+                // Update page numbers
+                const link = pageBtn.querySelector('a');
+                if (link) link.textContent = i;
+            }
+        }
+        
+        // Set active class
+        document.querySelectorAll('.paginate_button.page-item').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        if (currentPage === 1) {
+            document.getElementById('page1')?.classList.add('active');
+        } else if (currentPage === 2) {
+            document.getElementById('page2')?.classList.add('active');
+        } else if (currentPage === 3) {
+            document.getElementById('page3')?.classList.add('active');
+        }
+    }
+    
+    // Enable/disable previous button
+    const prevBtn = document.getElementById('prevBtn');
+    if (currentPage === 1) {
+        prevBtn.classList.add('disabled');
+    } else {
+        prevBtn.classList.remove('disabled');
+    }
+    
+    // Enable/disable next button
+    const nextBtn = document.getElementById('nextBtn');
+    if (currentPage === totalPages || totalPages === 0) {
+        nextBtn.classList.add('disabled');
+    } else {
+        nextBtn.classList.remove('disabled');
+    }
+}
+
+// Previous page function
+document.getElementById('prevBtn')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentPage > 1) {
+        currentPage--;
+        displayTable();
+    }
+});
+
+// Next page function
+document.getElementById('nextBtn')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    let filteredData = charityData;
+    if (currentFilter !== "all") {
+        filteredData = charityData.filter(item => item.status === currentFilter);
+    }
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        displayTable();
+    }
+});
+
+// Initial load
+displayTable();
+</script>

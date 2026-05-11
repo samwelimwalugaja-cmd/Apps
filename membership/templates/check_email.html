@@ -1,0 +1,457 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>HEYCG Charity | Check Your Email</title>
+
+  <!-- SweetAlert2 (optional for extra feedback, but not mandatory) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Bootstrap 5 CSS + Icons + Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e0e7ff 0%, #cbd5e1 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* outer container: 85% width, 85vh height (same as original) */
+    .forgot-container {
+      width: 85%;
+      max-width: 1400px;
+      height: 85vh;
+      margin: 0 auto;
+    }
+
+    /* glass card with heavy shadow and rounded borders */
+    .glass-card {
+      background: white;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
+      transition: all 0.2s ease;
+      height: 100%;
+      display: flex;
+    }
+
+    /* LEFT side carousel - full height (unchanged) */
+    .carousel-side {
+      flex: 1;
+      background: linear-gradient(145deg, #0b2b4f 0%, #0a1c2f 100%);
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* RIGHT side form container - but now we show a "check email" message panel */
+    .form-side {
+      flex: 1;
+      background: #ffffff;
+      padding: 2rem 2.2rem;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* custom scroll for form side - elegant */
+    .form-side::-webkit-scrollbar {
+      width: 5px;
+    }
+    .form-side::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .form-side::-webkit-scrollbar-thumb {
+      background: #0a58ca;
+      border-radius: 10px;
+    }
+
+    /* full height carousel with proper positioning */
+    .carousel, .carousel-inner, .carousel-item {
+      height: 100%;
+    }
+
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      filter: brightness(0.85);
+    }
+
+    /* Fixed carousel caption - properly anchored at bottom */
+    .carousel-caption-custom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
+      color: white;
+      padding: 1.5rem 1rem 1rem 1rem;
+      text-align: center;
+      margin: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .carousel-caption-custom h5 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .carousel-caption-custom p {
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    /* Ensure carousel controls are above caption */
+    .carousel-control-prev, .carousel-control-next {
+      z-index: 10;
+    }
+
+    .carousel-indicators {
+      z-index: 10;
+      bottom: 10px;
+      margin-bottom: 0;
+    }
+
+    .carousel-indicators button {
+      background-color: white;
+      opacity: 0.6;
+    }
+
+    .carousel-indicators button.active {
+      opacity: 1;
+    }
+
+    /* Primary button style (used for login button) */
+    .btn-reset-primary {
+      background: #0a58ca;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-radius: 60px;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .btn-reset-primary:hover {
+      background: #084298;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(10,88,202,0.3);
+    }
+
+    .btn-back-secondary {
+      background: transparent;
+      border: 1.5px solid #e2e8f0;
+      color: #475569;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+      border-radius: 60px;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .btn-back-secondary:hover {
+      background: #f8fafc;
+      border-color: #0a58ca;
+      color: #0a58ca;
+    }
+
+    /* confirmation message styling */
+    .success-message-card {
+      text-align: center;
+      padding: 0.5rem 0.2rem;
+    }
+
+    .email-icon-big {
+      font-size: 4.5rem;
+      background: linear-gradient(145deg, #eef2ff, #e0e7ff);
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      margin: 0 auto 1.2rem auto;
+      color: #0a58ca;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+
+    .message-text {
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .email-highlight {
+      background: #f1f5f9;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-family: monospace;
+      font-size: 0.85rem;
+      display: inline-block;
+      color: #0f172a;
+      word-break: break-all;
+    }
+
+    .info-box {
+      background: #f8fafc;
+      border-left: 4px solid #0a58ca;
+      border-radius: 1rem;
+      padding: 0.9rem 1rem;
+      margin: 1.2rem 0;
+      text-align: left;
+      font-size: 0.8rem;
+    }
+
+    .info-box i {
+      color: #0a58ca;
+      margin-right: 8px;
+    }
+
+    .back-to-login {
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 1.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #edf2f7;
+    }
+
+    .back-to-login a {
+      text-decoration: none;
+      color: #0a58ca;
+      font-weight: 600;
+    }
+
+    .back-to-login a:hover {
+      text-decoration: underline;
+    }
+
+    .forgot-footer {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1rem;
+      color: #64748b;
+    }
+
+    .badge-brand {
+      background: #0f172a;
+      color: white;
+      border-radius: 40px;
+      padding: 4px 14px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      display: inline-block;
+    }
+
+    .sub-head {
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      color: #475569;
+    }
+
+    /* Responsive: on mobile (<992px) remove left side (carousel) */
+    @media (max-width: 991.98px) {
+      .carousel-side {
+        display: none !important;
+      }
+      .form-side {
+        flex: 1;
+        width: 100%;
+        padding: 1.5rem;
+        justify-content: center;
+      }
+      .forgot-container {
+        width: 95%;
+        height: 85vh;
+      }
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* for very short screens adjust spacing */
+    @media (max-height: 700px) {
+      .form-side {
+        padding: 1.2rem 1.8rem;
+      }
+      .sub-head {
+        margin-bottom: 1rem;
+      }
+      .carousel-caption-custom {
+        padding: 0.8rem 1rem 0.6rem 1rem;
+      }
+      .carousel-caption-custom h5 {
+        font-size: 1rem;
+      }
+      .carousel-caption-custom p {
+        font-size: 0.7rem;
+      }
+      .email-icon-big {
+        width: 75px;
+        height: 75px;
+        font-size: 3rem;
+        margin-bottom: 0.8rem;
+      }
+    }
+
+    /* Simple animation for subtle entrance */
+    .fade-in-up {
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="forgot-container">
+  <div class="glass-card">
+    <!-- LEFT COLUMN: CAROUSEL full height (identical to original) -->
+    <div class="carousel-side">
+      <div id="forgotCarousel" class="carousel slide carousel-fade h-100 w-100" data-bs-ride="carousel">
+        <div class="carousel-inner h-100">
+          <div class="carousel-item active h-100">
+            <img src="{% static 'img/img1.jpg' %}" alt="Charity volunteering">
+            <div class="carousel-caption-custom">
+              <h5>🤝 Need Help?</h5>
+              <p>We'll help you get back in</p>
+            </div>
+          </div>
+          <div class="carousel-item h-100">
+            <img src="{% static 'img/img2.jpg' %}" alt="Education support">
+            <div class="carousel-caption-custom">
+              <h5>📚 Reset Your Password</h5>
+              <p>Secure account recovery</p>
+            </div>
+          </div>
+          <div class="carousel-item h-100">
+            <img src="{% static 'img/img3.jpg' %}" alt="Community gathering">
+            <div class="carousel-caption-custom">
+              <h5>🌍 Stay Connected</h5>
+              <p>Access your account again</p>
+            </div>
+          </div>
+          <div class="carousel-item h-100">
+            <img src="{% static 'img/img4.jpg' %}" alt="Donation drive">
+            <div class="carousel-caption-custom">
+              <h5>❤️ We're Here</h5>
+              <p>Supporting you every step</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#forgotCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#forgotCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#forgotCarousel" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#forgotCarousel" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#forgotCarousel" data-bs-slide-to="2"></button>
+          <button type="button" data-bs-target="#forgotCarousel" data-bs-slide-to="3"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: MESSAGE PAGE "Check Your Email" (replacing the original form) -->
+    <div class="form-side fade-in-up">
+      <div class="mb-3 mt-5 d-flex align-items-center justify-content-between">
+        <span class="badge-brand">
+          <i class="fas fa-hands-helping me-1"></i> HEYCG
+        </span>
+      </div>
+
+      <!-- Confirmation content: link sent successfully -->
+      <div class="success-message-card">
+        <div class="email-icon-big">
+          <i class="fas fa-envelope-open-text"></i>
+        </div>
+        
+        <h2>Check your email</h2>
+        <p class="message-text">
+          We've sent a password reset link to<br>
+          <span class="email-highlight" id="displayUserEmail">{{ email }}</span>
+        </p>
+        
+        <div class="info-box">
+          <i class="fas fa-clock"></i> The link will expire in <strong>1 hour</strong> for security reasons.<br>
+          <i class="fas fa-envelope"></i> Please check your <strong>spam/junk folder</strong> if you don't see the message within a few minutes.
+        </div>
+
+        <p class="message-text" style="font-size: 0.85rem;">
+          Once you click the link in the email, you'll be able to create a new password and regain access to your account.
+        </p>
+
+        <!-- Primary login button that takes user back to login page -->
+        <a href="{% url 'membership:login' %}" id="mainLoginBtn" class="btn btn-reset-primary w-100 py-2 fw-semibold mt-2">
+          <i class="fas fa-sign-in-alt me-2"></i> Back to Login
+        </a>
+
+        <!-- Resend hint or extra link? subtle optional, but we provide "Didn't receive email?" -->
+        <div class="text-center mt-3">
+          <small class="text-muted">Didn't receive an email?</small>
+          <a href="#" id="resendLinkHint" style="font-size: 0.75rem; text-decoration: none; font-weight: 500; margin-left: 4px;">Resend reset link</a>
+        </div>
+
+        <div class="forgot-footer">
+          <i class="fas fa-shield-alt me-1"></i> Secure password recovery process.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<!-- Note: For the left carousel images, placeholder images are used but you can replace with your static img paths 
+     like {% static 'img/img1.jpg' %} later. Since this is a standalone page, I used placeholders. The user can easily replace src attribute
+     with their Django static tags. The design mimics the exact same layout. -->
+</body>
+</html>

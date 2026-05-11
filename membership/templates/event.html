@@ -1,0 +1,350 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Events</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header text-white py-2">
+                                                          <h5><i class="fa fa-gift"></i> Events</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      
+
+       <div class="card-block p-3">
+        <!-- Upcoming Events Section -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="m-0 text-primary"><i class="fa fa-clock-o"></i> Upcoming Events</h6>
+                <span class="label label-success small">New events added weekly</span>
+            </div>
+            
+            <div class="row" id="upcomingEvents">
+                <!-- Event 1 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card border-left-primary" style="border-left: 3px solid #0a58ca;">
+                        <div class="card-block p-2">
+                            <div class="row">
+                                <div class="col-3 text-center">
+                                    <div class="bg-primary text-white rounded p-1">
+                                        <div class="small">DEC</div>
+                                        <div class="h5 m-0">15</div>
+                                        <div class="small">2024</div>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="m-0">Annual Fundraising Gala</h6>
+                                    <small class="text-muted"><i class="fa fa-map-marker"></i> Serena Hotel, Dar es Salaam</small>
+                                    <small class="text-muted d-block"><i class="fa fa-clock-o"></i> 6:00 PM - 10:00 PM</small>
+                                    <span class="label label-warning small mt-1">Limited Seats</span>
+                                    <button class="btn btn-primary btn-sm float-right mt-1" onclick="registerEvent(1)">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card border-left-success" style="border-left: 3px solid #28a745;">
+                        <div class="card-block p-2">
+                            <div class="row">
+                                <div class="col-3 text-center">
+                                    <div class="bg-success text-white rounded p-1">
+                                        <div class="small">JAN</div>
+                                        <div class="h5 m-0">10</div>
+                                        <div class="small">2025</div>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="m-0">Clean Water Walkathon</h6>
+                                    <small class="text-muted"><i class="fa fa-map-marker"></i> Coco Beach, Dar es Salaam</small>
+                                    <small class="text-muted d-block"><i class="fa fa-clock-o"></i> 7:00 AM - 12:00 PM</small>
+                                    <span class="label label-success small mt-1">Free Registration</span>
+                                    <button class="btn btn-primary btn-sm float-right mt-1" onclick="registerEvent(2)">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card border-left-info" style="border-left: 3px solid #17a2b8;">
+                        <div class="card-block p-2">
+                            <div class="row">
+                                <div class="col-3 text-center">
+                                    <div class="bg-info text-white rounded p-1">
+                                        <div class="small">FEB</div>
+                                        <div class="h5 m-0">05</div>
+                                        <div class="small">2025</div>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="m-0">Medical Camp - Volunteer Training</h6>
+                                    <small class="text-muted"><i class="fa fa-map-marker"></i> HEYCG HQ, Kinondoni</small>
+                                    <small class="text-muted d-block"><i class="fa fa-clock-o"></i> 9:00 AM - 4:00 PM</small>
+                                    <span class="label label-info small mt-1">Volunteers Needed</span>
+                                    <button class="btn btn-primary btn-sm float-right mt-1" onclick="registerEvent(3)">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 4 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card border-left-warning" style="border-left: 3px solid #ffc107;">
+                        <div class="card-block p-2">
+                            <div class="row">
+                                <div class="col-3 text-center">
+                                    <div class="bg-warning text-dark rounded p-1">
+                                        <div class="small">MAR</div>
+                                        <div class="h5 m-0">08</div>
+                                        <div class="small">2025</div>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="m-0">International Women's Day Celebration</h6>
+                                    <small class="text-muted"><i class="fa fa-map-marker"></i> Jakaya Kikwete Hall</small>
+                                    <small class="text-muted d-block"><i class="fa fa-clock-o"></i> 10:00 AM - 3:00 PM</small>
+                                    <span class="label label-warning small mt-1">Open to All</span>
+                                    <button class="btn btn-primary btn-sm float-right mt-1" onclick="registerEvent(4)">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Registered Events -->
+        <div class="mb-4">
+            <h6 class="m-0 text-success mb-2"><i class="fa fa-check-circle"></i> My Registered Events</h6>
+            
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registeredEvents">
+                        {% if registered_events %}
+                            {% for event in registered_events %}
+                            <tr>
+                                <td>{{ event.name }}</td>
+                                <td>{{ event.date }}</td>
+                                <td>{{ event.location }}</td>
+                                <td><span class="label label-success">Registered</span></td>
+                                <td><a href="#" class="small text-danger" onclick="cancelEvent({{ event.id }})">Cancel</a></td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted small">You haven't registered for any events yet</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Past Events -->
+        <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="m-0 text-muted"><i class="fa fa-history"></i> Past Events</h6>
+                <small class="text-muted">Events you attended</small>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-sm" style="font-size: 12px;">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Certificate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if past_events %}
+                            {% for event in past_events %}
+                            <tr>
+                                <td>{{ event.name }}</td>
+                                <td>{{ event.date }}</td>
+                                <td>{{ event.location }}</td>
+                                <td>
+                                    {% if event.certificate %}
+                                        <a href="{{ event.certificate }}" class="small">Download</a>
+                                    {% else %}
+                                        <span class="text-muted small">Not available</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted small">No past events found</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Event Registration Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white py-2">
+                <h6 class="m-0"><i class="fa fa-pencil-square-o"></i> Event Registration</h6>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <form method="post" id="registerForm" onsubmit="return submitRegistration()">
+                {% csrf_token %}
+                <div class="modal-body p-3">
+                    <input type="hidden" name="event_id" id="eventId">
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Event Name</label>
+                        <input type="text" class="form-control form-control-sm" id="eventName" readonly>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Your Name</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ member.first_name }} {{ member.last_name }}" readonly>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Email Address</label>
+                        <input type="email" class="form-control form-control-sm" value="{{ member.email }}" readonly>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Phone Number</label>
+                        <input type="tel" class="form-control form-control-sm" id="regPhone" name="phone" value="{{ member.phone_number }}" required>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label class="small fw-bold">Number of Guests (Optional)</label>
+                        <input type="number" class="form-control form-control-sm" name="guests" min="0" max="5" value="0">
+                        <small class="text-muted">You can bring up to 5 guests</small>
+                    </div>
+                    
+                    <div class="alert alert-info py-1 px-2 small mb-0" style="font-size: 11px;">
+                        <i class="fa fa-info-circle"></i> After registration, you'll receive a confirmation via SMS/Email
+                    </div>
+                </div>
+                <div class="modal-footer py-2">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Confirm Registration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+<script>
+    // Event data
+    const events = {
+        1: { name: "Annual Fundraising Gala", date: "Dec 15, 2024", location: "Serena Hotel" },
+        2: { name: "Clean Water Walkathon", date: "Jan 10, 2025", location: "Coco Beach" },
+        3: { name: "Medical Camp - Volunteer Training", date: "Feb 5, 2025", location: "HEYCG HQ" },
+        4: { name: "International Women's Day Celebration", date: "Mar 8, 2025", location: "Jakaya Kikwete Hall" }
+    };
+    
+    function registerEvent(eventId) {
+        const event = events[eventId];
+        if (event) {
+            document.getElementById('eventId').value = eventId;
+            document.getElementById('eventName').value = event.name;
+            $('#registerModal').modal('show');
+        }
+    }
+    
+    function submitRegistration() {
+        const phone = document.getElementById('regPhone').value;
+        if (!phone) {
+            alert('Please enter your phone number');
+            return false;
+        }
+        
+        alert('Registration successful! You will receive a confirmation message.');
+        $('#registerModal').modal('hide');
+        
+        // Refresh page to show new registration
+        setTimeout(() => location.reload(), 1000);
+        return false;
+    }
+    
+    function cancelEvent(eventId) {
+        if (confirm('Are you sure you want to cancel your registration?')) {
+            alert('Registration cancelled successfully');
+            location.reload();
+        }
+    }
+</script>
+{% endblock %}

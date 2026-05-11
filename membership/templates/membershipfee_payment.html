@@ -1,0 +1,275 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %} Make Payment | Membership Portal {% endblock %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Make Payments</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header text-white py-2">
+                                                          <h5><i class="fa fa-gift"></i> Make membership fee payment</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      
+<div class="card-block p-3">
+        
+        <!-- Info Alert -->
+        <div class="alert alert-info py-1 px-2 small mb-2" style="font-size: 11px;">
+            <i class="fa fa-info-circle"></i> 
+            <strong>Membership Fee: TZS 2,000 per month</strong>
+        </div>
+
+        <!-- Current Payment Status Card -->
+        <div class="card bg-light mb-3">
+            <div class="card-block p-2">
+                <div class="row text-center">
+                    <div class="col-4 border-right">
+                        <small class="text-muted">Current Month</small>
+                        <h6 class="text-primary m-0" id="currentMonth">December 2024</h6>
+                    </div>
+                    <div class="col-4 border-right">
+                        <small class="text-muted">Amount Due</small>
+                        <h6 class="text-danger m-0">TZS 2,000</h6>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted">Payment Status</small>
+                        <h6 class="text-warning m-0" id="paymentStatus">Pending</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <form method="post" id="paymentForm" onsubmit="return validatePayment()">
+            {% csrf_token %}
+            
+            <!-- Month Selection -->
+            <div class="form-group mb-2">
+                <label class="small fw-bold mb-1">Select Month</label>
+                <select class="form-select form-select-sm" id="paymentMonth" name="payment_month" required onchange="updatePaymentInfo()" style="width: 100%;">
+                    <option value="">-- Select Month --</option>
+                    <option value="2024-12">December 2024 (Current)</option>
+                    <option value="2025-01">January 2025</option>
+                    <option value="2025-02">February 2025</option>
+                    <option value="2025-03">March 2025</option>
+                    <option value="2025-04">April 2025</option>
+                    <option value="2025-05">May 2025</option>
+                    <option value="2025-06">June 2025</option>
+                </select>
+            </div>
+
+            <!-- Amount -->
+            <div class="form-group mb-2">
+                <label class="small fw-bold mb-1">Amount</label>
+                <div class="input-group">
+                    <span class="input-group-text">TZS</span>
+                    <input type="text" class="form-control form-control-sm" id="amount" value="2,000" readonly>
+                </div>
+            </div>
+
+            <!-- Payment Method - Inside properly -->
+            <div class="form-group mb-2">
+                <label class="small fw-bold mb-1">Payment Method</label>
+                <div class="row ms-3">
+                    <div class="col-6">
+                        <div class="form-check">
+                            <input class="form-check-input ms-2" type="radio" name="payment_method" id="mobileMoney" value="mobile" checked onchange="togglePaymentMethod()">
+                            <label class="form-check-label small" for="mobileMoney">Mobile Money</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" id="bankTransfer" value="bank" onchange="togglePaymentMethod()">
+                            <label class="form-check-label small" for="bankTransfer">Bank Transfer</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Money Details -->
+            <div class="form-group mb-2" id="mobileDetails">
+                <label class="small fw-bold mb-1">Mobile Money Number</label>
+                <input type="tel" class="form-control form-control-sm" id="mobile_number" name="mobile_number" placeholder="0712345678">
+            </div>
+
+            <!-- Bank Details -->
+            <div class="form-group mb-2" id="bankDetails" style="display: none;">
+                <div class="alert alert-light border small p-1 mb-1" style="font-size: 10px;">
+                    <strong>Bank Details:</strong><br>
+                    Bank: CRDB | Account: HEYCG Charity | Number: 01-234567-89
+                </div>
+                <label class="small">Upload Receipt</label>
+                <input type="file" class="form-control form-control-sm" id="receipt" name="receipt" accept="image/*,.pdf">
+            </div>
+
+            <!-- Payment Instructions - Shortened -->
+            <div class="alert alert-info py-1 px-2 mb-2" id="paymentInstructions" style="font-size: 10px;">
+                <strong>Instructions:</strong><br>
+                - Go to M-Pesa/Tigo Pesa/Airtel Money<br>
+                - Pay Bill: <strong>123456</strong> | Acc: <strong>HEYCG{{ member.id }}</strong><br>
+                - Amount: <strong>TZS 2,000</strong>
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-right">
+                <a href="{% url 'membership:dashboard' %}" class="btn btn-default btn-sm">Cancel</a>
+                <button type="submit" class="btn btn-primary btn-sm">Submit Payment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+    
+<script>
+    function togglePaymentMethod() {
+        const mobileSelected = document.getElementById('mobileMoney').checked;
+        const mobileDetails = document.getElementById('mobileDetails');
+        const bankDetails = document.getElementById('bankDetails');
+        const instructions = document.getElementById('paymentInstructions');
+        
+        if (mobileSelected) {
+            mobileDetails.style.display = 'block';
+            bankDetails.style.display = 'none';
+            instructions.innerHTML = '<strong><i class="fa fa-info-circle"></i> Payment Instructions (Mobile Money):</strong><br>' +
+                '- Go to M-Pesa, Tigo Pesa, or Airtel Money<br>' +
+                '- Select "Pay Bill" or "Send Money"<br>' +
+                '- Business Number: <strong>123456</strong><br>' +
+                '- Account Number: <strong>HEYCG{{ member.id }}</strong><br>' +
+                '- Amount: <strong>TZS 2,000</strong><br>' +
+                '- Complete payment then check "I have paid" below';
+            document.getElementById('mobile_number').required = true;
+        } else {
+            mobileDetails.style.display = 'none';
+            bankDetails.style.display = 'block';
+            instructions.innerHTML = '<strong><i class="fa fa-info-circle"></i> Payment Instructions (Bank Transfer):</strong><br>' +
+                '- Transfer TZS 2,000 to the bank account above<br>' +
+                '- Use your Membership ID as reference: <strong>HEYCG{{ member.id }}</strong><br>' +
+                '- Upload receipt/screenshot above<br>' +
+                '- Your payment will be verified within 24 hours';
+            document.getElementById('mobile_number').required = false;
+        }
+    }
+    
+    function updatePaymentInfo() {
+        const monthSelect = document.getElementById('paymentMonth');
+        const selectedMonth = monthSelect.value;
+        const currentMonth = document.getElementById('currentMonth');
+        
+        if (selectedMonth) {
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const [year, month] = selectedMonth.split('-');
+            currentMonth.innerHTML = `${monthNames[parseInt(month)-1]} ${year}`;
+        }
+    }
+    
+    function validatePayment() {
+        const month = document.getElementById('paymentMonth').value;
+        const confirmCheck = document.getElementById('confirmPayment').checked;
+        const mobileSelected = document.getElementById('mobileMoney').checked;
+        
+        if (!month) {
+            alert('Please select the month you want to pay for');
+            return false;
+        }
+        
+        if (!confirmCheck) {
+            alert('Please confirm that you have made the payment');
+            return false;
+        }
+        
+        if (mobileSelected) {
+            const mobileNumber = document.getElementById('mobile_number').value;
+            if (!mobileNumber) {
+                alert('Please enter your mobile money number');
+                return false;
+            }
+            if (!/^[0-9]{10,12}$/.test(mobileNumber.replace(/\D/g, ''))) {
+                alert('Please enter a valid mobile number (10-12 digits)');
+                return false;
+            }
+        } else {
+            const receipt = document.getElementById('receipt').files[0];
+            if (!receipt) {
+                if (confirm('No receipt uploaded. You can upload later from payment history. Continue?')) {
+                    return true;
+                }
+                return false;
+            }
+            if (receipt.size > 2 * 1024 * 1024) {
+                alert('Receipt file is too large. Maximum 2MB');
+                return false;
+            }
+        }
+        
+        const monthText = document.getElementById('paymentMonth').options[document.getElementById('paymentMonth').selectedIndex].text;
+        return confirm(`Confirm payment of TZS 2,000 for ${monthText}?`);
+    }
+    
+    // Check if current month already paid (example - replace with Django logic)
+    {% if current_month_paid %}
+    document.getElementById('alreadyPaidAlert').style.display = 'block';
+    document.getElementById('paymentForm').style.display = 'none';
+    document.getElementById('paymentStatus').innerHTML = 'Paid';
+    document.getElementById('paymentStatus').className = 'text-success m-0';
+    {% endif %}
+    
+    togglePaymentMethod();
+</script>                               
+{% endblock %}

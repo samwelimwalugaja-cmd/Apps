@@ -1,0 +1,485 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Events</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header text-white py-2">
+                                                          <h5><i class="fa fa-gift"></i> Events</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      
+
+
+     <div class="card-block p-3">
+        
+        <!-- Info Message -->
+        <div class="alert alert-info py-2 px-3 small mb-3">
+            <i class="fa fa-info-circle"></i> 
+            Here you can find all reports published by HEYCG administration including financial reports, event reports, and membership updates.
+        </div>
+
+        <!-- Membership Fee Reports -->
+        <div class="mb-4">
+            <h6 class="text-primary mb-2"><i class="fa fa-money"></i> Membership Fee Reports</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Report Title</th>
+                            <th>Month/Year</th>
+                            <th>Published Date</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monthly Membership Collection Report</td>
+                            <td>December 2024</td>
+                            <td>2025-01-05</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Membership Collection Report</td>
+                            <td>November 2024</td>
+                            <td>2024-12-03</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Quarterly Membership Report (Q3)</td>
+                            <td>Jul-Sep 2024</td>
+                            <td>2024-10-10</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Annual Membership Report 2023</td>
+                            <td>Year 2023</td>
+                            <td>2024-01-15</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Event Reports -->
+        <div class="mb-4">
+            <h6 class="text-success mb-2"><i class="fa fa-calendar-check-o"></i> Event Reports</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Event Date</th>
+                            <th>Published Date</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Annual Fundraising Gala 2024 - Report</td>
+                            <td>2024-12-15</td>
+                            <td>2024-12-20</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Clean Water Walkathon Report</td>
+                            <td>2024-11-10</td>
+                            <td>2024-11-18</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Medical Camp - Mbeya Report</td>
+                            <td>2024-10-05</td>
+                            <td>2024-10-12</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Women Empowerment Workshop Report</td>
+                            <td>2024-09-20</td>
+                            <td>2024-09-28</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- General / Group Reports -->
+        <div class="mb-4">
+            <h6 class="text-warning mb-2"><i class="fa fa-users"></i> General & Group Reports</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Report Title</th>
+                            <th>Period</th>
+                            <th>Published Date</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Membership Growth Report 2024</td>
+                            <td>Jan-Dec 2024</td>
+                            <td>2025-01-10</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Total Members Count & Statistics</td>
+                            <td>Q4 2024</td>
+                            <td>2025-01-05</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Membership Fee Usage Report</td>
+                            <td>2024</td>
+                            <td>2024-12-30</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Annual Impact Report 2024</td>
+                            <td>Year 2024</td>
+                            <td>2024-12-20</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>HEYCG Transparency Report</td>
+                            <td>H1 2024</td>
+                            <td>2024-07-15</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>Audited Financial Statement</td>
+                            <td>2023</td>
+                            <td>2024-03-20</td>
+                            <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> Download PDF</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Reports Card View -->
+        <div class="mt-4">
+            <h6 class="text-muted mb-2"><i class="fa fa-newspaper-o"></i> Latest Reports</h6>
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <div class="card border-left-primary" style="border-left: 3px solid #0a58ca;">
+                        <div class="card-block p-2">
+                            <small class="text-muted">December 2024</small>
+                            <h6 class="m-0">Monthly Membership Report</h6>
+                            <small>Total members: 1,247</small>
+                            <div class="mt-1">
+                                <a href="#" class="btn btn-danger btn-xs py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <div class="card border-left-success" style="border-left: 3px solid #28a745;">
+                        <div class="card-block p-2">
+                            <small class="text-muted">December 2024</small>
+                            <h6 class="m-0">Fundraising Gala Report</h6>
+                            <small>Raised: 15.5M TZS</small>
+                            <div class="mt-1">
+                                <a href="#" class="btn btn-danger btn-xs py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <div class="card border-left-warning" style="border-left: 3px solid #ffc107;">
+                        <div class="card-block p-2">
+                            <small class="text-muted">Q4 2024</small>
+                            <h6 class="m-0">Quarterly Impact Report</h6>
+                            <small>Lives impacted: 5,432</small>
+                            <div class="mt-1">
+                                <a href="#" class="btn btn-danger btn-xs py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Summary Box -->
+        <div class="alert alert-light border mt-3 py-2 px-3 small">
+            <div class="row text-center">
+                <div class="col-3">
+                    <h5 class="text-primary m-0">{{ total_members|default:"1,247" }}</h5>
+                    <small>Total Members</small>
+                </div>
+                <div class="col-3">
+                    <h5 class="text-success m-0">{{ total_events|default:"24" }}</h5>
+                    <small>Events Held</small>
+                </div>
+                <div class="col-3">
+                    <h5 class="text-warning m-0">{{ fee_collected|default:"29.9M" }}</h5>
+                    <small>Fee Collected</small>
+                </div>
+                <div class="col-3">
+                    <h5 class="text-info m-0">{{ reports_count|default:"18" }}</h5>
+                    <small>Reports Published</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Sample data - replace with Django data
+    const donationData = {
+        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        amounts: [5000, 2000, 7000, 3000, 10000, 2000, 8000, 4000, 6000, 2000, 9000, 5000]
+    };
+    
+    const campaignData = {
+        labels: ['Clean Water', 'Education', 'Medical', 'Women Empower', 'General'],
+        amounts: [25000, 35000, 18000, 12000, 8000]
+    };
+    
+    let donationChart, campaignChart;
+    
+    // Initialize charts
+    function initCharts() {
+        const ctx1 = document.getElementById('donationChart').getContext('2d');
+        const ctx2 = document.getElementById('campaignChart').getContext('2d');
+        
+        donationChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: donationData.months,
+                datasets: [{
+                    label: 'Donations (TZS)',
+                    data: donationData.amounts,
+                    borderColor: '#0a58ca',
+                    backgroundColor: 'rgba(10, 88, 202, 0.1)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+        
+        campaignChart = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: campaignData.labels,
+                datasets: [{
+                    data: campaignData.amounts,
+                    backgroundColor: ['#0a58ca', '#28a745', '#dc3545', '#ffc107', '#17a2b8']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    }
+    
+    // Load activity table
+    function loadActivityTable() {
+        const activities = [
+            { date: '2024-12-01', activity: 'Donation', details: 'Clean Water Initiative', impact: '+10,000 TZS' },
+            { date: '2024-11-25', activity: 'Event', details: 'Fundraising Gala', impact: 'Attended' },
+            { date: '2024-11-20', activity: 'Volunteer', details: 'Medical Camp', impact: '+8 hours' },
+            { date: '2024-11-15', activity: 'Donation', details: 'Education Program', impact: '+25,000 TZS' },
+            { date: '2024-11-10', activity: 'Event', details: 'Clean Water Walkathon', impact: 'Attended' }
+        ];
+        
+        const tbody = document.getElementById('activityTable');
+        tbody.innerHTML = '';
+        activities.forEach(act => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${act.date}</td>
+                    <td>${act.activity}</td>
+                    <td>${act.details}</td>
+                    <td class="text-right">${act.impact}</td>
+                </tr>
+            `;
+        });
+    }
+    
+    // Load donations table
+    function loadDonationsTable() {
+        const donations = [
+            { date: '2024-12-01', campaign: 'Clean Water Initiative', amount: 10000, status: 'Completed' },
+            { date: '2024-11-15', campaign: 'Education for All', amount: 25000, status: 'Completed' },
+            { date: '2024-10-20', campaign: 'Medical Outreach', amount: 5000, status: 'Completed' },
+            { date: '2024-09-10', campaign: 'Clean Water Initiative', amount: 8000, status: 'Completed' }
+        ];
+        
+        const tbody = document.getElementById('donationsTable');
+        tbody.innerHTML = '';
+        let total = 0;
+        donations.forEach(don => {
+            total += don.amount;
+            tbody.innerHTML += `
+                <tr>
+                    <td>${don.date}</td>
+                    <td>${don.campaign}</td>
+                    <td class="text-right">${don.amount.toLocaleString()}</td>
+                    <td><span class="label label-success">${don.status}</span></td>
+                    <td class="text-center"><a href="#" class="small">View</a></td>
+                </tr>
+            `;
+        });
+        document.getElementById('donationsTotal').innerHTML = total.toLocaleString();
+    }
+    
+    // Load events table
+    function loadEventsTable() {
+        const events = [
+            { date: '2024-11-25', name: 'Annual Fundraising Gala', location: 'Serena Hotel', certificate: '#' },
+            { date: '2024-11-10', name: 'Clean Water Walkathon', location: 'Coco Beach', certificate: '#' },
+            { date: '2024-10-05', name: 'Medical Camp', location: 'Mbeya', certificate: '#' }
+        ];
+        
+        const tbody = document.getElementById('eventsTable');
+        tbody.innerHTML = '';
+        events.forEach(ev => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${ev.date}</td>
+                    <td>${ev.name}</td>
+                    <td>${ev.location}</td>
+                    <td class="text-center"><a href="${ev.certificate}" class="small">Download</a></td>
+                </tr>
+            `;
+        });
+        document.getElementById('eventsTotal').innerHTML = events.length;
+    }
+    
+    // Load volunteer table
+    function loadVolunteerTable() {
+        const volunteers = [
+            { date: '2024-11-20', activity: 'Medical Camp - Setup', hours: 8, location: 'Mbeya' },
+            { date: '2024-11-10', activity: 'Clean Water Walkathon', hours: 5, location: 'Coco Beach' },
+            { date: '2024-10-15', activity: 'Food Distribution', hours: 6, location: 'Kinondoni' },
+            { date: '2024-10-01', activity: 'School Supplies Packing', hours: 4, location: 'HEYCG HQ' }
+        ];
+        
+        const tbody = document.getElementById('volunteerTable');
+        tbody.innerHTML = '';
+        let total = 0;
+        volunteers.forEach(vol => {
+            total += vol.hours;
+            tbody.innerHTML += `
+                <tr>
+                    <td>${vol.date}</td>
+                    <td>${vol.activity}</td>
+                    <td class="text-right">${vol.hours}</td>
+                    <td>${vol.location}</td>
+                </tr>
+            `;
+        });
+        document.getElementById('volunteerTotal').innerHTML = total;
+    }
+    
+    // Change report type
+    function changeReport() {
+        const type = document.getElementById('reportType').value;
+        document.getElementById('summaryReport').style.display = type === 'summary' ? 'block' : 'none';
+        document.getElementById('donationsReport').style.display = type === 'donations' ? 'block' : 'none';
+        document.getElementById('eventsReport').style.display = type === 'events' ? 'block' : 'none';
+        document.getElementById('volunteerReport').style.display = type === 'volunteer' ? 'block' : 'none';
+    }
+    
+    // Generate report based on filters
+    function generateReport() {
+        const fromDate = document.getElementById('fromDate').value;
+        const toDate = document.getElementById('toDate').value;
+        alert(`Report generated for ${fromDate} to ${toDate}`);
+        // Refresh all tables with filtered data
+        loadActivityTable();
+        loadDonationsTable();
+        loadEventsTable();
+        loadVolunteerTable();
+    }
+    
+    // Download PDF
+    function downloadPDF() {
+        alert('PDF download feature - Will generate PDF report');
+        // window.print() or use jsPDF library
+    }
+    
+    // Print report
+    function printReport() {
+        window.print();
+    }
+    
+    // Initial load
+    initCharts();
+    loadActivityTable();
+    loadDonationsTable();
+    loadEventsTable();
+    loadVolunteerTable();
+</script>                               
+{% endblock %}

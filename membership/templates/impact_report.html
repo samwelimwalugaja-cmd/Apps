@@ -1,0 +1,346 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Events</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header text-white py-2">
+                                                          <h5><i class="ti-direction-alt"></i> My Events</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+ 
+    
+
+     <div class="card-block p-3">
+        
+        <!-- Info Alert -->
+        <div class="alert alert-info py-1 px-2 small mb-3" style="font-size: 11px;">
+            <i class="fa fa-info-circle"></i> 
+            Here you can find all impact reports published by HEYCG administration showing how your contributions are changing lives.
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="row mb-3">
+            <div class="col-3">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Lives Impacted</small>
+                    <h5 class="text-success m-0">12,847</h5>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Communities</small>
+                    <h5 class="text-primary m-0">45</h5>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Projects Completed</small>
+                    <h5 class="text-info m-0">28</h5>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Reports Published</small>
+                    <h5 class="text-warning m-0">12</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="alert alert-light border py-2 px-3 mb-3">
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Impact Category</label>
+                    <select class="form-select form-select-sm" id="filterCategory" onchange="filterImpactReports()">
+                        <option value="all">All Categories</option>
+                        <option value="education">Education</option>
+                        <option value="health">Health & Medical</option>
+                        <option value="water">Clean Water</option>
+                        <option value="empowerment">Women Empowerment</option>
+                        <option value="environment">Environment</option>
+                        <option value="orphanage">Orphanage</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Year</label>
+                    <select class="form-select form-select-sm" id="filterYear" onchange="filterImpactReports()">
+                        <option value="all">All Years</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Quarter</label>
+                    <select class="form-select form-select-sm" id="filterQuarter" onchange="filterImpactReports()">
+                        <option value="all">All Quarters</option>
+                        <option value="Q1">Q1 (Jan-Mar)</option>
+                        <option value="Q2">Q2 (Apr-Jun)</option>
+                        <option value="Q3">Q3 (Jul-Sep)</option>
+                        <option value="Q4">Q4 (Oct-Dec)</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Search</label>
+                    <input type="text" class="form-control form-control-sm" id="searchReport" placeholder="Search report..." onkeyup="filterImpactReports()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Impact Reports Table -->
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" style="font-size: 12px;">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Report Title</th>
+                        <th>Category</th>
+                        <th>Period</th>
+                        <th>Lives Impacted</th>
+                        <th>Beneficiaries</th>
+                        <th>Published Date</th>
+                        <th>Report</th>
+                    </tr>
+                </thead>
+                <tbody id="impactTableBody">
+                    <!-- Data loaded by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-3">
+            <div class="col-sm-6">
+                <small>Showing <span id="startRecord">0</span> to <span id="endRecord">0</span> of <span id="totalRecords">0</span> reports</small>
+            </div>
+            <div class="col-sm-6 text-right">
+                <ul class="pagination pagination-sm" style="margin: 0;">
+                    <li class="page-item" id="prevBtn"><a class="page-link" href="#" onclick="changePage(-1)">Previous</a></li>
+                    <li class="page-item" id="nextBtn"><a class="page-link" href="#" onclick="changePage(1)">Next</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- No Data Message -->
+        <div id="noDataMsg" class="text-center text-muted py-3" style="display: none;">
+            <i class="fa fa-inbox fa-2x"></i>
+            <p class="mt-1 small">No impact reports found</p>
+        </div>
+
+        <!-- Impact Note -->
+        <div class="alert alert-success py-1 px-2 small mt-2" style="font-size: 10px;">
+            <i class="fa fa-smile-o"></i> 
+            <strong>Thank you for making this impact possible!</strong> Every donation and volunteer hour contributes to these results.
+        </div>
+    </div>
+</div>
+
+
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+<script>
+    // Impact Reports Data
+    const impactReports = [
+        // 2024 Reports
+        { title: "Q4 2024 Impact Report - Clean Water Initiative", category: "water", quarter: "Q4", year: "2024", lives: 3240, beneficiaries: 1850, published: "2025-01-10" },
+        { title: "Q4 2024 Impact Report - Education Program", category: "education", quarter: "Q4", year: "2024", lives: 2100, beneficiaries: 520, published: "2025-01-08" },
+        { title: "Q3 2024 Impact Report - Medical Outreach", category: "health", quarter: "Q3", year: "2024", lives: 1850, beneficiaries: 1240, published: "2024-10-10" },
+        { title: "Q3 2024 Impact Report - Women Empowerment", category: "empowerment", quarter: "Q3", year: "2024", lives: 950, beneficiaries: 380, published: "2024-10-05" },
+        { title: "Q2 2024 Impact Report - Orphanage Support", category: "orphanage", quarter: "Q2", year: "2024", lives: 780, beneficiaries: 156, published: "2024-07-10" },
+        { title: "Q2 2024 Impact Report - Clean Water", category: "water", quarter: "Q2", year: "2024", lives: 2100, beneficiaries: 1200, published: "2024-07-08" },
+        { title: "Q1 2024 Impact Report - Education", category: "education", quarter: "Q1", year: "2024", lives: 1450, beneficiaries: 380, published: "2024-04-10" },
+        { title: "Q1 2024 Impact Report - Medical Camp", category: "health", quarter: "Q1", year: "2024", lives: 1200, beneficiaries: 800, published: "2024-04-05" },
+        
+        // 2023 Reports
+        { title: "Annual Impact Report 2023", category: "all", quarter: "annual", year: "2023", lives: 8500, beneficiaries: 3200, published: "2024-01-20" },
+        { title: "Q4 2023 Impact Report - Water Projects", category: "water", quarter: "Q4", year: "2023", lives: 1800, beneficiaries: 1050, published: "2024-01-10" },
+        { title: "Q4 2023 Impact Report - Education", category: "education", quarter: "Q4", year: "2023", lives: 1200, beneficiaries: 310, published: "2024-01-08" },
+        { title: "Q3 2023 Impact Report - Medical Outreach", category: "health", quarter: "Q3", year: "2023", lives: 1600, beneficiaries: 1100, published: "2023-10-10" },
+        { title: "Q3 2023 Impact Report - Environment", category: "environment", quarter: "Q3", year: "2023", lives: 850, beneficiaries: 420, published: "2023-10-05" },
+        { title: "Q2 2023 Impact Report - Women Empowerment", category: "empowerment", quarter: "Q2", year: "2023", lives: 720, beneficiaries: 290, published: "2023-07-12" },
+        { title: "Q2 2023 Impact Report - Orphanage", category: "orphanage", quarter: "Q2", year: "2023", lives: 580, beneficiaries: 118, published: "2023-07-08" },
+        { title: "Q1 2023 Impact Report - Clean Water", category: "water", quarter: "Q1", year: "2023", lives: 1250, beneficiaries: 720, published: "2023-04-10" },
+        { title: "Q1 2023 Impact Report - Education", category: "education", quarter: "Q1", year: "2023", lives: 980, beneficiaries: 260, published: "2023-04-05" },
+        
+        // 2022 Reports
+        { title: "Annual Impact Report 2022", category: "all", quarter: "annual", year: "2022", lives: 7200, beneficiaries: 2800, published: "2023-01-18" },
+        { title: "Q4 2022 Impact Report - Health", category: "health", quarter: "Q4", year: "2022", lives: 1350, beneficiaries: 890, published: "2023-01-10" },
+        { title: "Q3 2022 Impact Report - Water", category: "water", quarter: "Q3", year: "2022", lives: 1100, beneficiaries: 650, published: "2022-10-12" },
+        { title: "Q2 2022 Impact Report - Education", category: "education", quarter: "Q2", year: "2022", lives: 890, beneficiaries: 235, published: "2022-07-10" },
+        { title: "Q1 2022 Impact Report - Empowerment", category: "empowerment", quarter: "Q1", year: "2022", lives: 560, beneficiaries: 225, published: "2022-04-08" },
+        
+        // 2021 Reports
+        { title: "Annual Impact Report 2021", category: "all", quarter: "annual", year: "2021", lives: 5800, beneficiaries: 2100, published: "2022-01-15" }
+    ];
+
+    let currentPage = 1;
+    let rowsPerPage = 7;
+    let filteredData = [...impactReports];
+
+    function filterImpactReports() {
+        const category = document.getElementById('filterCategory').value;
+        const year = document.getElementById('filterYear').value;
+        const quarter = document.getElementById('filterQuarter').value;
+        const search = document.getElementById('searchReport').value.toLowerCase();
+        
+        filteredData = impactReports.filter(item => {
+            let match = true;
+            
+            if (category !== 'all' && item.category !== category) {
+                match = false;
+            }
+            
+            if (year !== 'all' && item.year !== year) {
+                match = false;
+            }
+            
+            if (quarter !== 'all' && item.quarter !== quarter) {
+                match = false;
+            }
+            
+            if (search && !item.title.toLowerCase().includes(search)) {
+                match = false;
+            }
+            
+            return match;
+        });
+        
+        currentPage = 1;
+        renderTable();
+    }
+
+    function getCategoryBadge(category) {
+        switch(category) {
+            case 'education': return '<span class="label label-primary">Education</span>';
+            case 'health': return '<span class="label label-danger">Health</span>';
+            case 'water': return '<span class="label label-info">Clean Water</span>';
+            case 'empowerment': return '<span class="label label-success">Empowerment</span>';
+            case 'environment': return '<span class="label label-warning">Environment</span>';
+            case 'orphanage': return '<span class="label label-default">Orphanage</span>';
+            default: return '<span class="label label-default">All Categories</span>';
+        }
+    }
+
+    function renderTable() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = Math.min(start + rowsPerPage, filteredData.length);
+        const pageData = filteredData.slice(start, end);
+        
+        const tbody = document.getElementById('impactTableBody');
+        const noDataMsg = document.getElementById('noDataMsg');
+        
+        if (pageData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No impact reports found</td></tr>';
+            noDataMsg.style.display = 'block';
+        } else {
+            tbody.innerHTML = '';
+            pageData.forEach(item => {
+                let periodDisplay = item.quarter === 'annual' ? `Annual ${item.year}` : `${item.quarter} ${item.year}`;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.title}</td>
+                        <td>${getCategoryBadge(item.category)}</td>
+                        <td>${periodDisplay}</td>
+                        <td class="text-right">${item.lives.toLocaleString()}</td>
+                        <td class="text-right">${item.beneficiaries.toLocaleString()}</td>
+                        <td>${item.published}</td>
+                        <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a></td>
+                    </tr>
+                `;
+            });
+            noDataMsg.style.display = 'none';
+        }
+        
+        // Update pagination info
+        document.getElementById('startRecord').innerHTML = filteredData.length === 0 ? 0 : start + 1;
+        document.getElementById('endRecord').innerHTML = end;
+        document.getElementById('totalRecords').innerHTML = filteredData.length;
+        
+        // Update pagination buttons
+        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 1);
+        document.getElementById('nextBtn').classList.toggle('disabled', end >= filteredData.length);
+    }
+
+    function changePage(delta) {
+        const newPage = currentPage + delta;
+        const maxPage = Math.ceil(filteredData.length / rowsPerPage);
+        if (newPage >= 1 && newPage <= maxPage) {
+            currentPage = newPage;
+            renderTable();
+        }
+    }
+
+    // Calculate total lives impacted from filtered data
+    function updateSummaryStats() {
+        const totalLives = impactReports.reduce((sum, item) => sum + item.lives, 0);
+        const totalBeneficiaries = impactReports.reduce((sum, item) => sum + item.beneficiaries, 0);
+        const uniqueCommunities = 45;
+        const completedProjects = 28;
+        
+        // Update stats if needed (they are static for demo)
+        document.querySelector('.text-success.m-0').innerHTML = totalLives.toLocaleString();
+    }
+    
+    // Initial render
+    updateSummaryStats();
+    renderTable();
+</script>                           
+{% endblock %}

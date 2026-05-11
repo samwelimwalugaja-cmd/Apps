@@ -1,0 +1,527 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Events</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header text-white py-2">
+                                                          <h5><i class="ti-direction-alt"></i> My Events</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+ 
+    <div class="card-block p-3">
+        
+        <!-- Info Alert -->
+        <div class="alert alert-info py-1 px-2 small mb-3" style="font-size: 11px;">
+            <i class="fa fa-info-circle"></i> 
+            Here you can find all membership reports published by HEYCG administration.
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="row mb-3">
+            <div class="col-4">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Total Members</small>
+                    <h5 class="text-primary m-0">1,247</h5>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Active Members</small>
+                    <h5 class="text-success m-0">1,156</h5>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Reports Published</small>
+                    <h5 class="text-info m-0">14</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== MONTHLY REPORTS ==================== -->
+        <div class="mb-4">
+            <h6 class="text-primary mb-2"><i class="fa fa-calendar"></i> Monthly Membership Reports</h6>
+            
+            <!-- Filter for Monthly -->
+            <div class="alert alert-light border py-1 px-2 mb-2">
+                <div class="row">
+                    <div class="col-md-3 mb-1">
+                        <label class="small fw-bold mb-1">Year</label>
+                        <select class="form-select form-select-sm" id="monthlyYearFilter" onchange="filterMonthlyReports()">
+                            <option value="all">All Years</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <label class="small fw-bold mb-1">Search</label>
+                        <input type="text" class="form-control form-control-sm" id="monthlySearch" placeholder="Search month..." onkeyup="filterMonthlyReports()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;" id="monthlyTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Report Title</th>
+                            <th>Month/Year</th>
+                            <th>Published Date</th>
+                            <th>Total Members</th>
+                            <th>Collection (TZS)</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyTableBody">
+                        <!-- Data loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination for Monthly -->
+            <div class="row mt-2" id="monthlyPagination">
+                <div class="col-sm-6">
+                    <small>Showing <span id="monthlyStart">0</span> to <span id="monthlyEnd">0</span> of <span id="monthlyTotal">0</span> reports</small>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="pagination pagination-sm" style="margin: 0;">
+                        <li class="page-item" id="monthlyPrev"><a class="page-link" href="#" onclick="changeMonthlyPage(-1)">Previous</a></li>
+                        <li class="page-item" id="monthlyNext"><a class="page-link" href="#" onclick="changeMonthlyPage(1)">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== QUARTERLY REPORTS ==================== -->
+        <div class="mb-4">
+            <h6 class="text-success mb-2"><i class="fa fa-pie-chart"></i> Quarterly Reports</h6>
+            
+            <!-- Filter for Quarterly -->
+            <div class="alert alert-light border py-1 px-2 mb-2">
+                <div class="row">
+                    <div class="col-md-3 mb-1">
+                        <label class="small fw-bold mb-1">Year</label>
+                        <select class="form-select form-select-sm" id="quarterlyYearFilter" onchange="filterQuarterlyReports()">
+                            <option value="all">All Years</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;" id="quarterlyTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Report Title</th>
+                            <th>Period</th>
+                            <th>Published Date</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quarterlyTableBody">
+                        <!-- Data loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination for Quarterly -->
+            <div class="row mt-2" id="quarterlyPagination">
+                <div class="col-sm-6">
+                    <small>Showing <span id="quarterlyStart">0</span> to <span id="quarterlyEnd">0</span> of <span id="quarterlyTotal">0</span> reports</small>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="pagination pagination-sm" style="margin: 0;">
+                        <li class="page-item" id="quarterlyPrev"><a class="page-link" href="#" onclick="changeQuarterlyPage(-1)">Previous</a></li>
+                        <li class="page-item" id="quarterlyNext"><a class="page-link" href="#" onclick="changeQuarterlyPage(1)">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ANNUAL REPORTS ==================== -->
+        <div class="mb-4">
+            <h6 class="text-warning mb-2"><i class="fa fa-file-text-o"></i> Annual Reports</h6>
+            
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;" id="annualTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Report Title</th>
+                            <th>Year</th>
+                            <th>Published Date</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody id="annualTableBody">
+                        <!-- Data loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination for Annual -->
+            <div class="row mt-2" id="annualPagination">
+                <div class="col-sm-6">
+                    <small>Showing <span id="annualStart">0</span> to <span id="annualEnd">0</span> of <span id="annualTotal">0</span> reports</small>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="pagination pagination-sm" style="margin: 0;">
+                        <li class="page-item" id="annualPrev"><a class="page-link" href="#" onclick="changeAnnualPage(-1)">Previous</a></li>
+                        <li class="page-item" id="annualNext"><a class="page-link" href="#" onclick="changeAnnualPage(1)">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SPECIAL REPORTS ==================== -->
+        <div class="mb-3">
+            <h6 class="text-info mb-2"><i class="fa fa-star"></i> Special Reports</h6>
+            
+            <!-- Filter for Special -->
+            <div class="alert alert-light border py-1 px-2 mb-2">
+                <div class="row">
+                    <div class="col-md-4 mb-1">
+                        <label class="small fw-bold mb-1">Search</label>
+                        <input type="text" class="form-control form-control-sm" id="specialSearch" placeholder="Search report..." onkeyup="filterSpecialReports()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" style="font-size: 12px;" id="specialTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Report Title</th>
+                            <th>Description</th>
+                            <th>Published Date</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specialTableBody">
+                        <!-- Data loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination for Special -->
+            <div class="row mt-2" id="specialPagination">
+                <div class="col-sm-6">
+                    <small>Showing <span id="specialStart">0</span> to <span id="specialEnd">0</span> of <span id="specialTotal">0</span> reports</small>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="pagination pagination-sm" style="margin: 0;">
+                        <li class="page-item" id="specialPrev"><a class="page-link" href="#" onclick="changeSpecialPage(-1)">Previous</a></li>
+                        <li class="page-item" id="specialNext"><a class="page-link" href="#" onclick="changeSpecialPage(1)">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+
+    <script>
+    // ==================== MONTHLY REPORTS DATA ====================
+    const monthlyData = [
+        { title: "Monthly Membership Report", month: "December 2024", year: "2024", published: "2025-01-05", members: 1247, collection: 2494000 },
+        { title: "Monthly Membership Report", month: "November 2024", year: "2024", published: "2024-12-03", members: 1215, collection: 2430000 },
+        { title: "Monthly Membership Report", month: "October 2024", year: "2024", published: "2024-11-05", members: 1198, collection: 2396000 },
+        { title: "Monthly Membership Report", month: "September 2024", year: "2024", published: "2024-10-04", members: 1175, collection: 2350000 },
+        { title: "Monthly Membership Report", month: "August 2024", year: "2024", published: "2024-09-06", members: 1152, collection: 2304000 },
+        { title: "Monthly Membership Report", month: "July 2024", year: "2024", published: "2024-08-05", members: 1128, collection: 2256000 },
+        { title: "Monthly Membership Report", month: "June 2024", year: "2023", published: "2023-07-05", members: 1095, collection: 2190000 }
+    ];
+    
+    let monthlyCurrentPage = 1;
+    let monthlyRowsPerPage = 5;
+    let monthlyFilteredData = [...monthlyData];
+    
+    function filterMonthlyReports() {
+        const year = document.getElementById('monthlyYearFilter').value;
+        const search = document.getElementById('monthlySearch').value.toLowerCase();
+        
+        monthlyFilteredData = monthlyData.filter(item => {
+            let match = true;
+            if (year !== 'all' && item.year !== year) match = false;
+            if (search && !item.month.toLowerCase().includes(search)) match = false;
+            return match;
+        });
+        
+        monthlyCurrentPage = 1;
+        renderMonthlyTable();
+    }
+    
+    function renderMonthlyTable() {
+        const start = (monthlyCurrentPage - 1) * monthlyRowsPerPage;
+        const end = Math.min(start + monthlyRowsPerPage, monthlyFilteredData.length);
+        const pageData = monthlyFilteredData.slice(start, end);
+        
+        const tbody = document.getElementById('monthlyTableBody');
+        tbody.innerHTML = '';
+        
+        pageData.forEach(item => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.title}</td>
+                    <td>${item.month}</td>
+                    <td>${item.published}</td>
+                    <td>${item.members}</td>
+                    <td class="text-right">${item.collection.toLocaleString()}</td>
+                    <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a></td>
+                </tr>
+            `;
+        });
+        
+        document.getElementById('monthlyStart').innerHTML = monthlyFilteredData.length === 0 ? 0 : start + 1;
+        document.getElementById('monthlyEnd').innerHTML = end;
+        document.getElementById('monthlyTotal').innerHTML = monthlyFilteredData.length;
+        
+        document.getElementById('monthlyPrev').classList.toggle('disabled', monthlyCurrentPage === 1);
+        document.getElementById('monthlyNext').classList.toggle('disabled', end >= monthlyFilteredData.length);
+    }
+    
+    function changeMonthlyPage(delta) {
+        const newPage = monthlyCurrentPage + delta;
+        const maxPage = Math.ceil(monthlyFilteredData.length / monthlyRowsPerPage);
+        if (newPage >= 1 && newPage <= maxPage) {
+            monthlyCurrentPage = newPage;
+            renderMonthlyTable();
+        }
+    }
+    
+    // ==================== QUARTERLY REPORTS DATA ====================
+    const quarterlyData = [
+        { title: "Q4 2024 Membership Report", period: "Oct - Dec 2024", year: "2024", published: "2025-01-10" },
+        { title: "Q3 2024 Membership Report", period: "Jul - Sep 2024", year: "2024", published: "2024-10-10" },
+        { title: "Q2 2024 Membership Report", period: "Apr - Jun 2024", year: "2024", published: "2024-07-12" },
+        { title: "Q1 2024 Membership Report", period: "Jan - Mar 2024", year: "2024", published: "2024-04-08" },
+        { title: "Q4 2023 Membership Report", period: "Oct - Dec 2023", year: "2023", published: "2024-01-10" }
+    ];
+    
+    let quarterlyCurrentPage = 1;
+    let quarterlyRowsPerPage = 4;
+    let quarterlyFilteredData = [...quarterlyData];
+    
+    function filterQuarterlyReports() {
+        const year = document.getElementById('quarterlyYearFilter').value;
+        quarterlyFilteredData = quarterlyData.filter(item => {
+            if (year !== 'all' && item.year !== year) return false;
+            return true;
+        });
+        quarterlyCurrentPage = 1;
+        renderQuarterlyTable();
+    }
+    
+    function renderQuarterlyTable() {
+        const start = (quarterlyCurrentPage - 1) * quarterlyRowsPerPage;
+        const end = Math.min(start + quarterlyRowsPerPage, quarterlyFilteredData.length);
+        const pageData = quarterlyFilteredData.slice(start, end);
+        
+        const tbody = document.getElementById('quarterlyTableBody');
+        tbody.innerHTML = '';
+        
+        pageData.forEach(item => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.title}</td>
+                    <td>${item.period}</td>
+                    <td>${item.published}</td>
+                    <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a></td>
+                </tr>
+            `;
+        });
+        
+        document.getElementById('quarterlyStart').innerHTML = quarterlyFilteredData.length === 0 ? 0 : start + 1;
+        document.getElementById('quarterlyEnd').innerHTML = end;
+        document.getElementById('quarterlyTotal').innerHTML = quarterlyFilteredData.length;
+        
+        document.getElementById('quarterlyPrev').classList.toggle('disabled', quarterlyCurrentPage === 1);
+        document.getElementById('quarterlyNext').classList.toggle('disabled', end >= quarterlyFilteredData.length);
+    }
+    
+    function changeQuarterlyPage(delta) {
+        const newPage = quarterlyCurrentPage + delta;
+        const maxPage = Math.ceil(quarterlyFilteredData.length / quarterlyRowsPerPage);
+        if (newPage >= 1 && newPage <= maxPage) {
+            quarterlyCurrentPage = newPage;
+            renderQuarterlyTable();
+        }
+    }
+    
+    // ==================== ANNUAL REPORTS DATA ====================
+    const annualData = [
+        { title: "Annual Membership Report 2024", year: "2024", published: "2025-01-15" },
+        { title: "Annual Membership Report 2023", year: "2023", published: "2024-01-20" },
+        { title: "Annual Membership Report 2022", year: "2022", published: "2023-01-18" }
+    ];
+    
+    let annualCurrentPage = 1;
+    let annualRowsPerPage = 3;
+    let annualFilteredData = [...annualData];
+    
+    function renderAnnualTable() {
+        const start = (annualCurrentPage - 1) * annualRowsPerPage;
+        const end = Math.min(start + annualRowsPerPage, annualFilteredData.length);
+        const pageData = annualFilteredData.slice(start, end);
+        
+        const tbody = document.getElementById('annualTableBody');
+        tbody.innerHTML = '';
+        
+        pageData.forEach(item => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.title}</td>
+                    <td>${item.year}</td>
+                    <td>${item.published}</td>
+                    <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a></td>
+                </tr>
+            `;
+        });
+        
+        document.getElementById('annualStart').innerHTML = annualFilteredData.length === 0 ? 0 : start + 1;
+        document.getElementById('annualEnd').innerHTML = end;
+        document.getElementById('annualTotal').innerHTML = annualFilteredData.length;
+        
+        document.getElementById('annualPrev').classList.toggle('disabled', annualCurrentPage === 1);
+        document.getElementById('annualNext').classList.toggle('disabled', end >= annualFilteredData.length);
+    }
+    
+    function changeAnnualPage(delta) {
+        const newPage = annualCurrentPage + delta;
+        const maxPage = Math.ceil(annualFilteredData.length / annualRowsPerPage);
+        if (newPage >= 1 && newPage <= maxPage) {
+            annualCurrentPage = newPage;
+            renderAnnualTable();
+        }
+    }
+    
+    // ==================== SPECIAL REPORTS DATA ====================
+    const specialData = [
+        { title: "Membership Growth Analysis", description: "5-year membership growth trend", published: "2024-12-01" },
+        { title: "Membership Fee Usage Report", description: "How membership fees are utilized", published: "2024-11-20" },
+        { title: "Member Demographics Report", description: "Age, gender, location distribution", published: "2024-10-15" },
+        { title: "Member Satisfaction Survey", description: "Annual member feedback results", published: "2024-09-10" },
+        { title: "Retention Rate Analysis", description: "Member retention statistics", published: "2024-08-05" }
+    ];
+    
+    let specialCurrentPage = 1;
+    let specialRowsPerPage = 3;
+    let specialFilteredData = [...specialData];
+    
+    function filterSpecialReports() {
+        const search = document.getElementById('specialSearch').value.toLowerCase();
+        specialFilteredData = specialData.filter(item => {
+            if (search && !item.title.toLowerCase().includes(search) && !item.description.toLowerCase().includes(search)) return false;
+            return true;
+        });
+        specialCurrentPage = 1;
+        renderSpecialTable();
+    }
+    
+    function renderSpecialTable() {
+        const start = (specialCurrentPage - 1) * specialRowsPerPage;
+        const end = Math.min(start + specialRowsPerPage, specialFilteredData.length);
+        const pageData = specialFilteredData.slice(start, end);
+        
+        const tbody = document.getElementById('specialTableBody');
+        tbody.innerHTML = '';
+        
+        pageData.forEach(item => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.title}</td>
+                    <td>${item.description}</td>
+                    <td>${item.published}</td>
+                    <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a></td>
+                </tr>
+            `;
+        });
+        
+        document.getElementById('specialStart').innerHTML = specialFilteredData.length === 0 ? 0 : start + 1;
+        document.getElementById('specialEnd').innerHTML = end;
+        document.getElementById('specialTotal').innerHTML = specialFilteredData.length;
+        
+        document.getElementById('specialPrev').classList.toggle('disabled', specialCurrentPage === 1);
+        document.getElementById('specialNext').classList.toggle('disabled', end >= specialFilteredData.length);
+    }
+    
+    function changeSpecialPage(delta) {
+        const newPage = specialCurrentPage + delta;
+        const maxPage = Math.ceil(specialFilteredData.length / specialRowsPerPage);
+        if (newPage >= 1 && newPage <= maxPage) {
+            specialCurrentPage = newPage;
+            renderSpecialTable();
+        }
+    }
+    
+    // Initial render
+    renderMonthlyTable();
+    renderQuarterlyTable();
+    renderAnnualTable();
+    renderSpecialTable();
+</script>                                
+{% endblock %}

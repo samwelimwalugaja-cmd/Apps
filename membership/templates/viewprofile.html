@@ -1,0 +1,177 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %} My Profile | Membership Portal {% endblock %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">My Profile</h5>
+                                          <p class="m-b-0">Welcome to HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                          <h5><i class="fa fa-user-circle-o"></i> My Profile</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      <div class="card-block">
+                                                          <!-- Announcement 1 -->
+                                                          <div class="col-md-12 text-center m-b-5 p-b-15">
+                                                                {% if member.profile_picture %}
+                                                                    <img src="{{ member.profile_picture.url }}" class="img-circle" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                                                                {% else %}
+                                                                    <img src="https://ui-avatars.com/api/?background=0a58ca&color=fff&rounded=true&size=150&bold=true&name={{ member.first_name }}+{{ member.last_name }}" class="img-circle">
+                                                                {% endif %}
+                                                                <h5 class="m-t-15">{{ member.first_name|lower|capfirst }} {{ member.last_name|lower|capfirst }}</h5>
+                                                                <span class="label label-success">Active Member</span>
+                                                                <div class="text-muted mt-2">
+                                                                    <p>{{ member.whyhycg }}</p>
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <a href="#{% url 'membership:edit Profile' %}" class="btn btn-outline-primary btn-sm">
+                                                                        Edit Profile
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                          
+                                                          <!-- Announcement 2 -->
+                                                      </div>
+                                                  </div>
+                                        </div>
+
+
+
+                                        <div class="col-xl-6 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                          <h5><i class="fa fa-user-circle-o"></i> Personal Informations</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      <div class="card-block">
+                                                          
+                                                          <!-- Announcement 2 -->
+                                                          <div class="align-middle m-b-25 p-b-15" style="border-bottom: 1px solid #eee;">
+                                                              
+
+                                                              <div class="">
+                                                                <div class="row">
+                                                                    <div class="col-xl-6 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">First Name:<br></strong> {{ member.first_name|default:"Not provided" }}</p>
+                                                                            
+                                                                    </div>
+
+                                                                    <div class="col-xl-6 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">Middle Name:<br></strong> {{ member.middle_name|default:"Not provided" }}</p>
+                                                                    </div>
+
+                                                                    <div class="col-xl-6 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">Last Name:<br></strong> {{ member.last_name|default:"Not provided" }}</p>
+                                                                    </div>
+
+                                                                    <div class="col-xl-6 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">Gender:<br></strong> {{ member.gender|default:"Not provided" }}</p>
+                                                                    </div>
+                                                                </div>
+                                                              </div>
+                                                          </div>
+                                                          
+                                                          
+                                                      </div>
+                                                  </div>
+                                        </div>
+
+
+
+
+                                        <div class="col-xl-6 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                          <h5><i class="fa fa-user-circle-o"></i> Others Informations</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                      <div class="card-block">
+                                                          
+                                                          <!-- Announcement 2 -->
+                                                          <div class="align-middle m-b-25 p-b-15" style="border-bottom: 1px solid #eee;">
+
+                                                              <div class="">
+                                                                <div class="row">
+                                                                    <div class="col-xl-6 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">Email:<br></strong> {{ member.email|default:"Not provided" }}</p>
+                                                                            
+                                                                    </div>
+
+                                                                    <div class="col-xl-6 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">Phone number:<br></strong> {{ member.phone_number|default:"Not provided" }}</p>
+                                                                    </div>
+
+                                                                    <div class="col-xl-12 col-md-12">
+                                                                            <p><strong class="text-muted mb-1">Address:<br></strong> {{ member.address|default:"Not provided" }}</p>
+                                                                    </div>
+                                                                </div>
+                                                              </div>
+                                                          </div>
+                                                          
+                                                          
+                                                      </div>
+                                                  </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+{% endblock %}

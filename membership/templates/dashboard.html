@@ -1,0 +1,298 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %} Dashboard | Membership Portal {% endblock %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Dashboard</h5>
+                                          <p class="m-b-0">Welcome to HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                             <!-- task, page, download counter start -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-purple">{{ total_donations|default:"0" }} TZS</h4>
+                                        <h6 class="text-muted m-b-0">Total Donations</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <i class="fa fa-heart f-28"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-purple">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">+{{ donation_growth|default:"0" }}% this month</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="fa fa-line-chart text-white f-16"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-green">{{ total_events|default:"0" }}</h4>
+                                        <h6 class="text-muted m-b-0">All Events</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <i class="fa fa-handshake-o f-28"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-green">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">{{ totla_events|default:"0" }} new this month</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="fa fa-line-chart text-white f-16"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-red">{{ beneficiaries|default:"1,247" }}</h4>
+                                        <h6 class="text-muted m-b-0">Lives Impacted</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <i class="fa fa-users f-28"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-red">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">{{ new_beneficiaries|default:"156" }} this quarter</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="fa fa-line-chart text-white f-16"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-blue">{{ volunteer_hours|default:"3,245" }}</h4>
+                                        <h6 class="text-muted m-b-0">Volunteer Hours</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <i class="fa fa-clock-o f-28"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-blue">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">{{ hours_growth|default:"18" }}% increase</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="fa fa-line-chart text-white f-16"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- task, page, download counter end -->
+    
+                                            
+    
+                                            <!--  charity events start -->
+                                            <div class="col-xl-8 col-md-12">
+                                                <div class="card table-card">
+                                                    <div class="card-header">
+                                                        <h5><i class="fa fa-heart m-r-10"></i> Current Events</h5>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                <li><i class="fa fa-trash close-card"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover">
+
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>Slogan/Centre</th>
+                                                                        <th>Location</th>
+                                                                        <th>Date</th>
+                                                                        <th class="text-right">Budget (TZS)</th>
+                                                                    </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+
+                                                                    {% for event in events %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h6>{{ event.title }}</h6>
+                                                                            <p class="text-muted m-b-0">
+                                                                                {{ event.description|truncatewords:10 }}
+                                                                            </p>
+                                                                        </td>
+
+                                                                        <td>{{ event.location }}</td>
+
+                                                                        <td>{{ event.event_date|date:"d, M Y" }}</td>
+
+                                                                        <td class="text-right">
+                                                                            {{ event.budget|floatformat:0 }}/=
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    {% empty %}
+                                                                    <tr>
+                                                                        <td colspan="4" class="text-center">
+                                                                            No events found
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% endfor %}
+
+                                                                    </tbody>
+                                                                    </table>
+
+                                                            <div class="text-right m-r-20">
+                                                                <a href="#!" class=" b-b-primary text-primary">View all Events</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-4 col-md-12">
+                                                  <div class="card">
+                                                    <div class="card-header">
+                                                        <h5><i class="fa fa-bullhorn m-r-10"></i> Announcements</h5>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                <li><i class="fa fa-trash close-card"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+    {% for ann in announcements %}
+    <div class="align-middle  p-3" style="border-bottom: 1px solid #eee;">
+        <div class="d-inline-block">
+            <h6 class="m-b-5 mt-2">
+                <i class="fa fa-newspaper-o"></i> {{ ann.title }}
+            </h6>
+
+            <p class="text-muted m-b-5 small">
+                {{ ann.description|truncatewords:15 }}
+            </p>
+
+            <small class="text-c-blue">
+                <i class="fa fa-clock-o m-r-5"></i>
+                Posted: {{ ann.created_at|timesince }} ago
+            </small>
+
+
+            <!-- DOWNLOAD PDF -->
+                {% if ann.file %}
+                    <div class="m-t-10">
+                        <a href="{{ ann.file.url }}" class="btn btn-sm btn-primary" download>
+                            <i class="fa fa-download"></i> Download PDF
+                        </a>
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <div class="text-center p-3">
+        <h6>There is no new announcement</h6>
+    </div>
+{% endfor %}
+
+    <div class="text-center mb-2">
+        <a href="{% url 'membership:all-announcements' %}" class="b-b-primary text-primary">
+            View all announcements <i class="fa fa-arrow-right m-l-5"></i>
+        </a>
+    </div>
+
+</div>
+
+                                                    
+                                            <!--  project and team member end -->
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+
+
+
+                                    <!-- Notification -->
+{% if messages %}
+  <script>
+    {% for message in messages %}
+      Swal.fire({
+        icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}",
+        title: "{{ message|escapejs }}",
+        confirmButtonColor: "#0a58ca",
+
+        // 🔥 control size
+        width: '300px',
+        padding: '10px',
+        heightAuto: false,
+
+        // 🔥 font size control
+        customClass: {
+          title: 'swal-title-small',
+          popup: 'swal-popup-small'
+        }
+      });
+    {% endfor %}
+  </script>
+{% endif %}
+{% endblock %}

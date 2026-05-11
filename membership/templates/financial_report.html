@@ -1,0 +1,336 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">Events</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+        <!-- Announcements Section - Right Side (col-xl-4) -->
+                                              <div class="col-xl-12 col-md-12">
+                                                  <div class="card">
+                                                      <div class="card-header text-white py-2">
+                                                          <h5><i class="ti-direction-alt"></i> My Events</h5>
+                                                          <div class="card-header-right">
+                                                              <ul class="list-unstyled card-option">
+                                                                  <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                                                  <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                  <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                  <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                  <li><i class="fa fa-trash close-card"></i></li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+ 
+    
+
+      <div class="card-block p-3">
+        
+        <!-- Info Alert -->
+        <div class="alert alert-info py-1 px-2 small mb-3" style="font-size: 11px;">
+            <i class="fa fa-info-circle"></i> 
+            Here you can find all financial reports published by HEYCG administration including income statements, expenditure reports, and audited financial statements.
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="row mb-3">
+            <div class="col-4">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Total Income (2024)</small>
+                    <h5 class="text-success m-0">TZS 45.2M</h5>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Total Expenditure (2024)</small>
+                    <h5 class="text-danger m-0">TZS 38.7M</h5>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card bg-light p-2 text-center">
+                    <small class="text-muted">Reports Published</small>
+                    <h5 class="text-primary m-0">16</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="alert alert-light border py-2 px-3 mb-3">
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Report Type</label>
+                    <select class="form-select form-select-sm" id="filterType" onchange="filterFinancialReports()">
+                        <option value="all">All Types</option>
+                        <option value="income">Income Statement</option>
+                        <option value="expenditure">Expenditure Report</option>
+                        <option value="audited">Audited Statement</option>
+                        <option value="budget">Budget Report</option>
+                        <option value="donation">Donation Report</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Year</label>
+                    <select class="form-select form-select-sm" id="filterYear" onchange="filterFinancialReports()">
+                        <option value="all">All Years</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Period</label>
+                    <select class="form-select form-select-sm" id="filterPeriod" onchange="filterFinancialReports()">
+                        <option value="all">All Periods</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="annual">Annual</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="small fw-bold mb-1">Search</label>
+                    <input type="text" class="form-control form-control-sm" id="searchReport" placeholder="Search report..." onkeyup="filterFinancialReports()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Reports Table -->
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" style="font-size: 12px;">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Report Title</th>
+                        <th>Type</th>
+                        <th>Period</th>
+                        <th>Year</th>
+                        <th>Total Amount (TZS)</th>
+                        <th>Published Date</th>
+                        <th>File</th>
+                    </tr>
+                </thead>
+                <tbody id="financialTableBody">
+                    <!-- Data loaded by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-3">
+            <div class="col-sm-6">
+                <small>Showing <span id="startRecord">0</span> to <span id="endRecord">0</span> of <span id="totalRecords">0</span> reports</small>
+            </div>
+            <div class="col-sm-6 text-right">
+                <ul class="pagination pagination-sm" style="margin: 0;">
+                    <li class="page-item" id="prevBtn"><a class="page-link" href="#" onclick="changePage(-1)">Previous</a></li>
+                    <li class="page-item" id="nextBtn"><a class="page-link" href="#" onclick="changePage(1)">Next</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- No Data Message -->
+        <div id="noDataMsg" class="text-center text-muted py-3" style="display: none;">
+            <i class="fa fa-inbox fa-2x"></i>
+            <p class="mt-1 small">No financial reports found</p>
+        </div>
+
+        <!-- Note -->
+        <div class="alert alert-warning py-1 px-2 small mt-2" style="font-size: 10px;">
+            <i class="fa fa-shield"></i> 
+            All financial reports are audited and verified by independent auditors.
+        </div>
+    </div>
+</div>
+
+
+
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+
+ <script>
+    // Financial Reports Data
+    const financialReports = [
+        // 2024 Reports
+        { title: "December 2024 Income Statement", type: "income", period: "monthly", year: "2024", amount: 4200000, published: "2025-01-05" },
+        { title: "November 2024 Income Statement", type: "income", period: "monthly", year: "2024", amount: 3850000, published: "2024-12-05" },
+        { title: "October 2024 Expenditure Report", type: "expenditure", period: "monthly", year: "2024", amount: 3100000, published: "2024-11-05" },
+        { title: "Q3 2024 Financial Statement", type: "income", period: "quarterly", year: "2024", amount: 11200000, published: "2024-10-10" },
+        { title: "September 2024 Donation Report", type: "donation", period: "monthly", year: "2024", amount: 2500000, published: "2024-10-05" },
+        { title: "August 2024 Budget Report", type: "budget", period: "monthly", year: "2024", amount: 5000000, published: "2024-09-05" },
+        { title: "Q2 2024 Audited Statement", type: "audited", period: "quarterly", year: "2024", amount: 10800000, published: "2024-07-15" },
+        { title: "June 2024 Expenditure Report", type: "expenditure", period: "monthly", year: "2024", amount: 2800000, published: "2024-07-05" },
+        { title: "May 2024 Income Statement", type: "income", period: "monthly", year: "2024", amount: 3600000, published: "2024-06-05" },
+        { title: "April 2024 Donation Report", type: "donation", period: "monthly", year: "2024", amount: 2200000, published: "2024-05-05" },
+        { title: "Q1 2024 Financial Statement", type: "income", period: "quarterly", year: "2024", amount: 9800000, published: "2024-04-10" },
+        { title: "March 2024 Expenditure Report", type: "expenditure", period: "monthly", year: "2024", amount: 2500000, published: "2024-04-05" },
+        { title: "February 2024 Budget Report", type: "budget", period: "monthly", year: "2024", amount: 4500000, published: "2024-03-05" },
+        { title: "January 2024 Income Statement", type: "income", period: "monthly", year: "2024", amount: 3200000, published: "2024-02-05" },
+        
+        // 2023 Reports
+        { title: "Annual Financial Report 2023", type: "audited", period: "annual", year: "2023", amount: 38500000, published: "2024-03-20" },
+        { title: "Q4 2023 Financial Statement", type: "income", period: "quarterly", year: "2023", amount: 9500000, published: "2024-01-10" },
+        { title: "December 2023 Donation Report", type: "donation", period: "monthly", year: "2023", amount: 2100000, published: "2024-01-05" },
+        { title: "Q3 2023 Expenditure Report", type: "expenditure", period: "quarterly", year: "2023", amount: 8200000, published: "2023-10-10" },
+        { title: "Q2 2023 Income Statement", type: "income", period: "quarterly", year: "2023", amount: 8900000, published: "2023-07-10" },
+        { title: "Annual Budget Report 2023", type: "budget", period: "annual", year: "2023", amount: 42000000, published: "2023-02-15" },
+        { title: "Q1 2023 Financial Statement", type: "income", period: "quarterly", year: "2023", amount: 8700000, published: "2023-04-10" },
+        
+        // 2022 Reports
+        { title: "Annual Financial Report 2022", type: "audited", period: "annual", year: "2022", amount: 34200000, published: "2023-03-15" },
+        { title: "Q4 2022 Financial Statement", type: "income", period: "quarterly", year: "2022", amount: 8500000, published: "2023-01-10" },
+        { title: "Annual Donation Report 2022", type: "donation", period: "annual", year: "2022", amount: 18500000, published: "2023-01-20" },
+        
+        // 2021 Reports
+        { title: "Annual Financial Report 2021", type: "audited", period: "annual", year: "2021", amount: 29800000, published: "2022-03-15" }
+    ];
+
+    let currentPage = 1;
+    let rowsPerPage = 8;
+    let filteredData = [...financialReports];
+
+    function filterFinancialReports() {
+        const reportType = document.getElementById('filterType').value;
+        const year = document.getElementById('filterYear').value;
+        const period = document.getElementById('filterPeriod').value;
+        const search = document.getElementById('searchReport').value.toLowerCase();
+        
+        filteredData = financialReports.filter(item => {
+            let match = true;
+            
+            if (reportType !== 'all' && item.type !== reportType) {
+                match = false;
+            }
+            
+            if (year !== 'all' && item.year !== year) {
+                match = false;
+            }
+            
+            if (period !== 'all' && item.period !== period) {
+                match = false;
+            }
+            
+            if (search && !item.title.toLowerCase().includes(search)) {
+                match = false;
+            }
+            
+            return match;
+        });
+        
+        currentPage = 1;
+        renderTable();
+    }
+
+    function getTypeBadge(type) {
+        switch(type) {
+            case 'income': return '<span class="label label-success">Income</span>';
+            case 'expenditure': return '<span class="label label-danger">Expenditure</span>';
+            case 'audited': return '<span class="label label-primary">Audited</span>';
+            case 'budget': return '<span class="label label-info">Budget</span>';
+            case 'donation': return '<span class="label label-warning">Donation</span>';
+            default: return '<span class="label label-default">Other</span>';
+        }
+    }
+
+    function getPeriodBadge(period) {
+        switch(period) {
+            case 'monthly': return '<span class="label label-info">Monthly</span>';
+            case 'quarterly': return '<span class="label label-primary">Quarterly</span>';
+            case 'annual': return '<span class="label label-success">Annual</span>';
+            default: return '<span class="label label-default">Other</span>';
+        }
+    }
+
+    function renderTable() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = Math.min(start + rowsPerPage, filteredData.length);
+        const pageData = filteredData.slice(start, end);
+        
+        const tbody = document.getElementById('financialTableBody');
+        const noDataMsg = document.getElementById('noDataMsg');
+        
+        if (pageData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No financial reports found</td></tr>';
+            noDataMsg.style.display = 'block';
+        } else {
+            tbody.innerHTML = '';
+            pageData.forEach(item => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.title}</td>
+                        <td>${getTypeBadge(item.type)}</td>
+                        <td>${getPeriodBadge(item.period)}</td>
+                        <td>${item.year}</td>
+                        <td class="text-right">${item.amount.toLocaleString()}</td>
+                        <td>${item.published}</td>
+                        <td><a href="#" class="btn btn-danger btn-sm py-0 px-2"><i class="fa fa-file-pdf-o"></i> PDF</a></td>
+                    </tr>
+                `;
+            });
+            noDataMsg.style.display = 'none';
+        }
+        
+        // Update pagination info
+        document.getElementById('startRecord').innerHTML = filteredData.length === 0 ? 0 : start + 1;
+        document.getElementById('endRecord').innerHTML = end;
+        document.getElementById('totalRecords').innerHTML = filteredData.length;
+        
+        // Update pagination buttons
+        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 1);
+        document.getElementById('nextBtn').classList.toggle('disabled', end >= filteredData.length);
+    }
+
+    function changePage(delta) {
+        const newPage = currentPage + delta;
+        const maxPage = Math.ceil(filteredData.length / rowsPerPage);
+        if (newPage >= 1 && newPage <= maxPage) {
+            currentPage = newPage;
+            renderTable();
+        }
+    }
+
+    // Initial render
+    renderTable();
+</script>                             
+{% endblock %}

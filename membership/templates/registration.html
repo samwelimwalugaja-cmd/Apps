@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+{% load static %}
+{% load socialaccount %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>HEYCG Charity | Join the Movement</title>
+
+  <link rel="icon" href="{% static 'assets/images/favicon-01.png' %}" type="image/x-icon">
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Bootstrap 5 CSS + Icons + Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e0e7ff 0%, #cbd5e1 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* outer container: 90% width, 90vh max height */
+    .registration-container {
+      width: 90%;
+      max-width: 1400px;
+      height: 90vh;
+      margin: 0 auto;
+    }
+
+    /* glass card with heavy shadow and rounded borders */
+    .glass-card {
+      background: white;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
+      transition: all 0.2s ease;
+      height: 100%;
+      display: flex;
+    }
+
+    /* LEFT side carousel - full height */
+    .carousel-side {
+      flex: 1;
+      background: linear-gradient(145deg, #0b2b4f 0%, #0a1c2f 100%);
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* RIGHT side form - scrollable inside */
+    .form-side {
+      flex: 1;
+      background: #ffffff;
+      padding: 1.5rem 2rem;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* custom scroll for form side - elegant */
+    .form-side::-webkit-scrollbar {
+      width: 5px;
+    }
+    .form-side::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .form-side::-webkit-scrollbar-thumb {
+      background: #0a58ca;
+      border-radius: 10px;
+    }
+
+    /* full height carousel with proper positioning */
+    .carousel, .carousel-inner, .carousel-item {
+      height: 100%;
+    }
+
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      filter: brightness(0.85);
+    }
+
+    /* Fixed carousel caption - properly anchored at bottom without overflow */
+    .carousel-caption-custom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
+      color: white;
+      padding: 1.5rem 1rem 1rem 1rem;
+      text-align: center;
+      margin: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .carousel-caption-custom h5 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 0.25rem;
+    }
+
+    .carousel-caption-custom p {
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    /* Ensure carousel controls are above caption */
+    .carousel-control-prev, .carousel-control-next {
+      z-index: 10;
+    }
+
+    .carousel-indicators {
+      z-index: 10;
+      bottom: 10px;
+      margin-bottom: 0;
+    }
+
+    .carousel-indicators button {
+      background-color: white;
+      opacity: 0.6;
+    }
+
+    .carousel-indicators button.active {
+      opacity: 1;
+    }
+
+    /* charity colors: blue, white, black */
+    .btn-charity-primary {
+      background: #0a58ca;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      border-radius: 60px;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .btn-charity-primary:hover {
+      background: #084298;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(10,88,202,0.3);
+    }
+
+    .btn-outline-google {
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: #1e293b;
+      font-weight: 500;
+      border-radius: 60px;
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .btn-outline-google:hover {
+      background: #f8fafc;
+      border-color: #0a58ca;
+      color: #0a58ca;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.7rem;
+      margin: 0.7rem 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .divider::before {
+      margin-right: 0.8rem;
+    }
+
+    .divider::after {
+      margin-left: 0.8rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: #0f172a;
+      margin-bottom: 0.2rem;
+    }
+
+    .form-control, .form-select {
+      border-radius: 1rem;
+      border: 1.5px solid #e2e8f0;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.8rem;
+      transition: 0.2s;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #0a58ca;
+      box-shadow: 0 0 0 3px rgba(10,88,202,0.2);
+      outline: none;
+    }
+
+    /* Validation error & success border styles */
+    .form-control.error-input, .form-select.error-input {
+      border-color: #dc3545 !important;
+      background-color: #fff8f8;
+    }
+
+    .form-control.success-input, .form-select.success-input {
+      border-color: #198754 !important;
+      background-color: #f8fff9;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 0.65rem;
+      margin-top: 0.25rem;
+      display: block;
+      font-weight: 500;
+    }
+
+    .success-message {
+      color: #198754;
+      font-size: 0.65rem;
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    .profile-preview {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #0a58ca;
+      background: #f1f5f9;
+    }
+
+    .file-input-label {
+      background: #f1f5f9;
+      border-radius: 60px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px dashed #0a58ca;
+      color: #0a58ca;
+    }
+
+    .file-input-label:hover {
+      background: #e6f0ff;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .password-strength {
+      font-size: 0.6rem;
+      margin-top: 2px;
+    }
+
+    .form-bottom-actions {
+      margin-top: 0.8rem;
+    }
+
+    .signin-redirect {
+      text-align: center;
+      font-size: 0.7rem;
+      margin-top: 0.6rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #edf2f7;
+    }
+
+    .register-footer {
+      font-size: 0.65rem;
+      text-align: center;
+      margin-top: 0.7rem;
+      color: #64748b;
+    }
+
+    .badge-brand {
+      background: #0f172a;
+      color: white;
+      border-radius: 40px;
+      padding: 3px 12px;
+      font-weight: 600;
+      font-size: 0.65rem;
+      display: inline-block;
+    }
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-bottom: 0.2rem;
+    }
+
+    .sub-head {
+      font-size: 0.7rem;
+      margin-bottom: 0.8rem;
+      color: #475569;
+    }
+
+    /* compact row gaps */
+    .row.g-3 {
+      --bs-gutter-y: 0.5rem;
+      --bs-gutter-x: 0.7rem;
+    }
+
+    /* Responsive: on mobile (<992px) remove left side (carousel) */
+    @media (max-width: 991.98px) {
+      .carousel-side {
+        display: none !important;
+      }
+      .form-side {
+        flex: 1;
+        width: 100%;
+        padding: 1.2rem;
+      }
+      .registration-container {
+        width: 95%;
+        height: 90vh;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* for very short screens adjust spacing */
+    @media (max-height: 700px) {
+      .form-side {
+        padding: 1rem 1.5rem;
+      }
+      .row.g-3 {
+        --bs-gutter-y: 0.35rem;
+      }
+      .form-bottom-actions {
+        margin-top: 0.5rem;
+      }
+      .register-footer {
+        margin-top: 0.4rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+      }
+      .carousel-caption-custom {
+        padding: 0.8rem 1rem 0.6rem 1rem;
+      }
+      .carousel-caption-custom h5 {
+        font-size: 1rem;
+      }
+      .carousel-caption-custom p {
+        font-size: 0.7rem;
+      }
+    }
+
+    .toast-custom {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1200;
+    }
+    .swal-popup-small {
+      font-size: 12px;
+      border-radius: 12px;
+    }
+    .swal-title-small {
+      font-size: 14px !important;
+      font-weight: 600;
+    }
+    .swal2-popup {
+      padding: 10px !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="registration-container">
+  <div class="glass-card">
+    <!-- LEFT COLUMN: CAROUSEL full height - FIXED BOTTOM CAPTION -->
+    <div class="carousel-side">
+      <div id="charityCarousel" class="carousel slide carousel-fade h-100 w-100" data-bs-ride="carousel">
+        <div class="carousel-inner h-100">
+          <div class="carousel-item active h-100">
+            <img src="{% static 'img/img1.jpg' %}" alt="Charity volunteering">
+            <div class="carousel-caption-custom">
+              <h5>🤝 Empower Youth</h5>
+              <p>Together we raise hope</p>
+            </div>
+          </div>
+          <div class="carousel-item h-100">
+            <img src="{% static 'img/img2.jpg' %}" alt="Education support">
+            <div class="carousel-caption-custom">
+              <h5>📚 Education For All</h5>
+              <p>Your membership fuels dreams</p>
+            </div>
+          </div>
+          <div class="carousel-item h-100">
+            <img src="{% static 'img/img3.jpg' %}" alt="Community gathering">
+            <div class="carousel-caption-custom">
+              <h5>🌍 HEYCG Impact</h5>
+              <p>Be part of the movement</p>
+            </div>
+          </div>
+          <div class="carousel-item h-100">
+            <img src="{% static 'img/img4.jpg' %}" alt="Donation drive">
+            <div class="carousel-caption-custom">
+              <h5>❤️ Donate & Inspire</h5>
+              <p>Registration starts your journey</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#charityCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#charityCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#charityCarousel" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#charityCarousel" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#charityCarousel" data-bs-slide-to="2"></button>
+          <button type="button" data-bs-target="#charityCarousel" data-bs-slide-to="3"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: REGISTRATION FORM (scrollable) -->
+    <div class="form-side">
+      <div class="mb-2 d-flex align-items-center justify-content-between">
+        <span class="badge-brand">
+          <i class="fas fa-hands-helping me-1"></i> HEYCG
+        </span>
+      </div>
+
+      <h2 class="mb-0">Create account</h2>
+      <p class="text-secondary sub-head">Join <strong>HOCET YOUNG CHARITY GENERATION</strong></p>
+
+      <form method="POST" id="registrationForm" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-user text-primary me-1"></i> First name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Samweli" name="first_name">
+            <div class="error-message" id="firstNameError"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-user-friends text-primary me-1"></i> Last name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Mwalugaja" name="last_name">
+            <div class="error-message" id="lastNameError"></div>
+          </div>
+          <div class="col-12">
+            <label class="form-label"><i class="fas fa-envelope text-primary me-1"></i> Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="hello@heycg.org" name="email">
+            <div class="error-message" id="emailError"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-venus-mars text-primary me-1"></i> Gender</label>
+            <select class="form-select" id="gender" name="gender">
+              <option value="" disabled selected>Select gender</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="error-message" id="genderError"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label"><i class="fas fa-camera text-primary me-1"></i> Profile picture</label>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <img id="profilePreview" class="profile-preview" src="https://ui-avatars.com/api/?background=0a58ca&color=fff&rounded=true&size=45&bold=true&name=U" alt="Preview">
+              <label class="file-input-label">
+                <i class="fas fa-upload me-1"></i> Upload
+                <input type="file" id="profilePic" accept="image/jpeg,image/png,image/jpg" name="profile_picture">
+              </label>
+            </div>
+            <small class="text-muted" style="font-size: 0.55rem;">JPEG/PNG max 2MB</small>
+            <div class="error-message" id="profilePicError"></div>
+          </div>
+          <div class="col-12">
+            <label class="form-label"><i class="fas fa-lock text-primary me-1"></i> Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Create strong password" name="password">
+            <div class="password-strength text-muted" id="passwordHelp">Use 6+ chars with letters & numbers</div>
+            <div class="error-message" id="passwordError"></div>
+          </div>
+          <div class="col-12">
+            <label class="form-label"><i class="fas fa-check-circle text-primary me-1"></i> Confirm password</label>
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Repeat password" name="confirm_password">
+            <div class="error-message" id="confirmPasswordError"></div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="termsCheck" name="terms_accepted">
+              <label class="form-check-label small" for="termsCheck" style="font-size: 0.65rem;">
+                I agree to the <a href="#" class="text-decoration-none">Terms</a> & <a href="#" class="text-decoration-none">Privacy</a>
+              </label>
+              <div class="error-message" id="termsError"></div>
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-charity-primary w-100 py-2 fw-semibold">
+              <i class="fas fa-user-plus me-2"></i> Register as member
+            </button>
+          </div>
+        </div>
+
+        <!-- BOTTOM ACTIONS: Google + Sign in link -->
+        <div class="form-bottom-actions">
+          {% comment %} <div class="divider">or continue with</div>
+          <a href="{% url 'google_login' %}" class="btn btn-outline-google w-100">
+              <i class="fab fa-google"></i> Continue with Google
+          </a> {% endcomment %}
+          <div class="signin-redirect">
+            <i class="fas fa-arrow-right-to-bracket me-1"></i> Already have an account? 
+            <a href="{% url 'membership:login' %}" class="fw-bold text-decoration-none" style="color:#0a58ca;">Sign in here</a>
+          </div>
+        </div>
+
+        <div class="register-footer">
+          <i class="fas fa-shield-alt me-1"></i> Protected data. Membership fee (3,000 TZS) after approval.
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Notification for server messages (keep untouched) -->
+{% if messages %}
+  <script>
+    {% for message in messages %}
+      Swal.fire({
+        icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}",
+        title: "{{ message|escapejs }}",
+        confirmButtonColor: "#0a58ca",
+        width: '300px',
+        padding: '10px',
+        heightAuto: false,
+        customClass: {
+          title: 'swal-title-small',
+          popup: 'swal-popup-small'
+        }
+      });
+    {% endfor %}
+  </script>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  (function() {
+    // Helper: remove existing error/success styling and error messages
+    function clearFieldError(fieldId, errorId) {
+      const field = document.getElementById(fieldId);
+      const errorDiv = document.getElementById(errorId);
+      if (field) {
+        field.classList.remove('error-input', 'success-input');
+      }
+      if (errorDiv) {
+        errorDiv.innerText = '';
+      }
+    }
+
+    // Show error for specific field
+    function showFieldError(fieldId, errorId, message) {
+      const field = document.getElementById(fieldId);
+      const errorDiv = document.getElementById(errorId);
+      if (field) {
+        field.classList.remove('success-input');
+        field.classList.add('error-input');
+      }
+      if (errorDiv) {
+        errorDiv.innerText = message;
+      }
+    }
+
+    // Show success (green border) when validation passes
+    function showFieldSuccess(fieldId, errorId) {
+      const field = document.getElementById(fieldId);
+      const errorDiv = document.getElementById(errorId);
+      if (field) {
+        field.classList.remove('error-input');
+        field.classList.add('success-input');
+      }
+      if (errorDiv) {
+        errorDiv.innerText = '';
+      }
+    }
+
+    // Real-time name validation (only letters, no special chars, length 3-10)
+    function validateNameField(value) {
+      const nameRegex = /^[A-Za-z\u00C0-\u00FF\s]+$/; // letters and spaces only
+      if (!value || value.trim() === '') return 'This field is required.';
+      const trimmed = value.trim();
+      if (trimmed.length < 3) return 'Must be at least 3 characters.';
+      if (trimmed.length > 10) return 'Cannot exceed 10 characters.';
+      if (!nameRegex.test(trimmed)) return 'Only letters (no numbers or special characters).';
+      return '';
+    }
+
+    // First name validation handler
+    function validateFirstName() {
+      const firstName = document.getElementById('firstName');
+      const value = firstName ? firstName.value : '';
+      const errorMsg = validateNameField(value);
+      if (errorMsg) {
+        showFieldError('firstName', 'firstNameError', errorMsg);
+        return false;
+      } else {
+        showFieldSuccess('firstName', 'firstNameError');
+        return true;
+      }
+    }
+
+    // Last name validation
+    function validateLastName() {
+      const lastName = document.getElementById('lastName');
+      const value = lastName ? lastName.value : '';
+      const errorMsg = validateNameField(value);
+      if (errorMsg) {
+        showFieldError('lastName', 'lastNameError', errorMsg);
+        return false;
+      } else {
+        showFieldSuccess('lastName', 'lastNameError');
+        return true;
+      }
+    }
+
+    // Email validation (non-empty + valid email format)
+    function validateEmail() {
+      const emailField = document.getElementById('email');
+      const email = emailField ? emailField.value.trim() : '';
+      if (email === '') {
+        showFieldError('email', 'emailError', 'Email address is required.');
+        return false;
+      }
+      const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        showFieldError('email', 'emailError', 'Please enter a valid email address (e.g., name@example.com).');
+        return false;
+      }
+      showFieldSuccess('email', 'emailError');
+      return true;
+    }
+
+    // Gender validation (must select a non-empty option)
+    function validateGender() {
+      const genderSelect = document.getElementById('gender');
+      const selected = genderSelect ? genderSelect.value : '';
+      if (!selected || selected === '') {
+        showFieldError('gender', 'genderError', 'Please select your gender.');
+        return false;
+      }
+      showFieldSuccess('gender', 'genderError');
+      return true;
+    }
+
+    // Profile picture validation: check extension, size, and also preview when file selected
+    function validateProfilePicture() {
+      const fileInput = document.getElementById('profilePic');
+      const errorDiv = document.getElementById('profilePicError');
+      const previewImg = document.getElementById('profilePreview');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        // Profile picture is optional? According to requirement we only validate when selected.
+        // Requirement: "akichagua kutoka kwenye folder picha ionekane hapo kwenye duara" and validation of extension & size.
+        // If user does not upload, it's allowed (no error). So clear any existing errors.
+        if (errorDiv) errorDiv.innerText = '';
+        const field = document.getElementById('profilePic');
+        if (field) field.classList.remove('error-input', 'success-input');
+        return true;
+      }
+      const file = fileInput.files[0];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (!allowedTypes.includes(file.type)) {
+        showFieldError('profilePic', 'profilePicError', 'Only JPEG, JPG, or PNG images are allowed.');
+        return false;
+      }
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        showFieldError('profilePic', 'profilePicError', 'File size must be less than 2MB.');
+        return false;
+      }
+      // Preview image
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (previewImg) previewImg.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      showFieldSuccess('profilePic', 'profilePicError');
+      return true;
+    }
+
+    // Strong password validation: min 6 chars, at least one letter and one number
+    function validatePassword() {
+      const password = document.getElementById('password');
+      const pwdVal = password ? password.value : '';
+      if (pwdVal === '') {
+        showFieldError('password', 'passwordError', 'Password is required.');
+        return false;
+      }
+      if (pwdVal.length < 6) {
+        showFieldError('password', 'passwordError', 'Password must be at least 6 characters long.');
+        return false;
+      }
+      const hasLetter = /[A-Za-z]/.test(pwdVal);
+      const hasNumber = /[0-9]/.test(pwdVal);
+      if (!hasLetter || !hasNumber) {
+        showFieldError('password', 'passwordError', 'Password must contain at least one letter and one number.');
+        return false;
+      }
+      showFieldSuccess('password', 'passwordError');
+      return true;
+    }
+
+    // Confirm password match validation
+    function validateConfirmPassword() {
+      const password = document.getElementById('password');
+      const confirm = document.getElementById('confirmPassword');
+      const pwdVal = password ? password.value : '';
+      const confirmVal = confirm ? confirm.value : '';
+      if (confirmVal === '') {
+        showFieldError('confirmPassword', 'confirmPasswordError', 'Please confirm your password.');
+        return false;
+      }
+      if (pwdVal !== confirmVal) {
+        showFieldError('confirmPassword', 'confirmPasswordError', 'Passwords do not match.');
+        return false;
+      }
+      showFieldSuccess('confirmPassword', 'confirmPasswordError');
+      return true;
+    }
+
+    // Terms checkbox validation
+    function validateTerms() {
+      const terms = document.getElementById('termsCheck');
+      if (!terms.checked) {
+        showFieldError('termsCheck', 'termsError', 'You must agree to the Terms & Privacy.');
+        return false;
+      } else {
+        const errorDiv = document.getElementById('termsError');
+        if (errorDiv) errorDiv.innerText = '';
+        const field = document.getElementById('termsCheck');
+        if (field) field.classList.remove('error-input', 'success-input');
+        return true;
+      }
+    }
+
+    // Attach real-time event listeners
+    const firstNameField = document.getElementById('firstName');
+    if (firstNameField) firstNameField.addEventListener('input', validateFirstName);
+    const lastNameField = document.getElementById('lastName');
+    if (lastNameField) lastNameField.addEventListener('input', validateLastName);
+    const emailField = document.getElementById('email');
+    if (emailField) emailField.addEventListener('input', validateEmail);
+    const genderSelect = document.getElementById('gender');
+    if (genderSelect) genderSelect.addEventListener('change', validateGender);
+    const profilePicInput = document.getElementById('profilePic');
+    if (profilePicInput) profilePicInput.addEventListener('change', validateProfilePicture);
+    const passwordField = document.getElementById('password');
+    if (passwordField) passwordField.addEventListener('input', function() { validatePassword(); if (document.getElementById('confirmPassword').value) validateConfirmPassword(); });
+    const confirmField = document.getElementById('confirmPassword');
+    if (confirmField) confirmField.addEventListener('input', validateConfirmPassword);
+    const termsCheckbox = document.getElementById('termsCheck');
+    if (termsCheckbox) termsCheckbox.addEventListener('change', validateTerms);
+
+    // On form submit, run all validations and prevent if any fail
+    const form = document.getElementById('registrationForm');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        const isFirstNameValid = validateFirstName();
+        const isLastNameValid = validateLastName();
+        const isEmailValid = validateEmail();
+        const isGenderValid = validateGender();
+        const isProfilePicValid = validateProfilePicture(); // optional but validates if selected
+        const isPasswordValid = validatePassword();
+        const isConfirmValid = validateConfirmPassword();
+        const isTermsValid = validateTerms();
+
+        if (!isFirstNameValid || !isLastNameValid || !isEmailValid || !isGenderValid || !isPasswordValid || !isConfirmValid || !isTermsValid || !isProfilePicValid) {
+          e.preventDefault();
+          // Scroll to first error
+          const firstError = document.querySelector('.error-input');
+          if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // All good, allow submit
+          return true;
+        }
+      });
+    }
+
+    // Additional: For profile picture, if no file selected, remove any previous error on manual submit. It's optional.
+    // We ensure on page load no errors displayed.
+    // Initialize live preview for default avatar remains.
+    // Add onchange to revalidate profile pic if file cleared? Not needed since optional but validation function will pass if no file.
+    // Also add force success on fields that are pre-filled? Not needed.
+  })();
+</script>
+</body>
+</html>

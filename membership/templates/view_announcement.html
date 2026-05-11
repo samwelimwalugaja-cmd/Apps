@@ -1,0 +1,353 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %} All Announcements | Membership Portal {% endblock %}
+{% block content %}
+
+<style>
+    .table-sm td, .table-sm th {
+        padding: 6px 8px;
+        vertical-align: middle;
+    }
+    
+    .badge {
+        font-weight: normal;
+    }
+    
+    .table-danger {
+        background-color: #fff5f5 !important;
+    }
+    
+    .text-nowrap {
+        white-space: nowrap;
+    }
+    
+    .page-link {
+        color: #0a58ca;
+        border-radius: 4px;
+        margin: 0 2px;
+        cursor: pointer;
+    }
+    
+    .page-item.active .page-link {
+        background-color: #0a58ca;
+        border-color: #0a58ca;
+        color: white;
+    }
+    
+    .page-item.disabled .page-link {
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+</style>
+<div class="pcoded-content">
+                      <!-- Page-header start -->
+                      <div class="page-header">
+                          <div class="page-block">
+                              <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                      <div class="page-header-title">
+                                          <h5 class="m-b-10">All Announcements</h5>
+                                          <p class="m-b-0">HYCG Membership Portal</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <ul class="breadcrumb-title">
+                                          <li class="breadcrumb-item">
+                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                          </li>
+                                          <li class="breadcrumb-item"><a href="{% url 'membership:dashboard' %}">Dashboard</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+       
+
+
+<div class="col-xl-12 col-md-12">
+    <div class="card table-card">
+        <div class="card-header py-2">
+            <h5 class="mb-0" style="font-size: 14px;"><i class="fa fa-bullhorn m-r-10"></i> Announcements</h5>
+            <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                    <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                    <li><i class="fa fa-window-maximize full-card"></i></li>
+                    <li><i class="fa fa-minus minimize-card"></i></li>
+                    <li><i class="fa fa-refresh reload-card"></i></li>
+                    <li><i class="fa fa-trash close-card"></i></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-block p-3">
+            <!-- Statistics Badges -->
+            <div class="mb-2">
+                <span class="badge bg-primary" style="font-size: 10px;">Total: {{ total_count }}</span>
+                <span class="badge bg-success" style="font-size: 10px;">Active: {{ active_count }}</span>
+                <span class="badge bg-danger" style="font-size: 10px;">Expired: {{ expired_count }}</span>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover table-sm" style="font-size: 12px;" id="announcementTable">
+                    <thead>
+                        <tr>
+                            <th style="font-size: 11px;">Title</th>
+                            <th style="font-size: 11px;">Description</th>
+                            <th style="font-size: 11px;">By</th>
+                            <th style="font-size: 11px;">Created</th>
+                            <th style="font-size: 11px;">Expires</th>
+                            <th style="font-size: 11px;">Status</th>
+                            <th style="font-size: 11px;">File</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        {% for announcement in announcements %}
+                        <tr {% if not announcement.is_new %}class="table-danger"{% endif %} style="font-size: 11px;">
+                            <td>
+                                <strong>{{ announcement.title|truncatechars:30 }}</strong>
+                                {% if announcement.is_new %}
+                                    <span class="badge bg-success ms-1" style="font-size: 8px; padding: 2px 5px;">NEW</span>
+                                {% else %}
+                                    <span class="badge bg-danger ms-1" style="font-size: 8px; padding: 2px 5px;">EXP</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="text-muted">{{ announcement.description|truncatewords:8 }}</span>
+                            </td>
+                            <td>
+                                {% if announcement.created_by %}
+                                    {{ announcement.created_by.first_name|slice:":1" }}.{{ announcement.created_by.last_name|slice:":6" }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap" style="font-size: 10px;">
+                                {{ announcement.created_at|date:"d/m/y" }}
+                            </td>
+                            <td class="text-nowrap" style="font-size: 10px;">
+                                {% if announcement.expires_at %}
+                                    {{ announcement.expires_at|date:"d/m/y" }}
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if announcement.is_new %}
+                                    <span class="badge bg-success" style="font-size: 8px; padding: 2px 6px;">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger" style="font-size: 8px; padding: 2px 6px;">Expired</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if announcement.file %}
+                                    <a href="{{ announcement.file.url }}" class="text-primary" target="_blank" style="font-size: 10px;">
+                                        <i class="fa fa-paperclip"></i>
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted" style="font-size: 10px;">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-3">
+                                <small class="text-muted">No announcements found</small>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <!-- Pagination Section -->
+                <div class="row mt-3 align-items-center">
+                    <div class="col-6">
+                        <small class="text-muted" id="showingInfo" style="font-size: 11px;"></small>
+                    </div>
+                    <div class="col-6">
+                        <ul class="pagination pagination-sm justify-content-end mb-0" id="paginationControls"></ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+                                            
+
+                                                  </div>
+                                        </div>
+
+
+
+
+
+                                        
+                                    </div>
+                                    
+                                    
+                                    <!-- Page-body end -->
+
+
+                   
+    
+  <!-- JavaScript Pagination - Simplified & Working -->
+<script>
+    (function() {
+        // Wait for page to load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPagination);
+        } else {
+            initPagination();
+        }
+        
+        function initPagination() {
+            // Get all data rows from table (skip header row)
+            const table = document.getElementById('announcementTable');
+            if (!table) {
+                console.error('Table not found!');
+                return;
+            }
+            
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) {
+                console.error('Table body not found!');
+                return;
+            }
+            
+            // Get all rows that have data (not the "no announcements" row)
+            const allRows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // Filter out rows that have "No announcements" message
+            const dataRows = allRows.filter(row => {
+                const firstCell = row.cells[0];
+                return firstCell && !firstCell.innerText.includes('No announcements') && row.cells.length > 1;
+            });
+            
+            const totalItems = dataRows.length;
+            
+            // If no data rows, hide pagination
+            if (totalItems === 0) {
+                const paginationDiv = document.getElementById('paginationControls');
+                if (paginationDiv) paginationDiv.innerHTML = '';
+                const infoDiv = document.getElementById('showingInfo');
+                if (infoDiv) infoDiv.innerHTML = 'No announcements found';
+                return;
+            }
+            
+            // Pagination settings
+            const rowsPerPage = 5;
+            let currentPage = 1;
+            const totalPages = Math.ceil(totalItems / rowsPerPage);
+            
+            // Function to show rows for current page
+            function displayPage(page) {
+                // Hide all rows first
+                dataRows.forEach(row => {
+                    row.style.display = 'none';
+                });
+                
+                // Calculate start and end index
+                const start = (page - 1) * rowsPerPage;
+                const end = Math.min(start + rowsPerPage, totalItems);
+                
+                // Show rows for current page
+                for (let i = start; i < end; i++) {
+                    if (dataRows[i]) {
+                        dataRows[i].style.display = '';
+                    }
+                }
+                
+                // Update showing info
+                const showingInfo = document.getElementById('showingInfo');
+                if (showingInfo) {
+                    showingInfo.innerHTML = `Showing ${start + 1} - ${end} of ${totalItems} announcements`;
+                }
+                
+                // Update pagination buttons
+                renderPaginationButtons(page);
+            }
+            
+            // Function to render pagination buttons
+            function renderPaginationButtons(currentPageNum) {
+                const paginationContainer = document.getElementById('paginationControls');
+                if (!paginationContainer) return;
+                
+                let html = '';
+                
+                // Previous button
+                html += `<li class="page-item ${currentPageNum === 1 ? 'disabled' : ''}">
+                            <a class="page-link" href="javascript:void(0)" data-page="${currentPageNum - 1}" style="font-size: 11px; padding: 4px 8px;">«</a>
+                         </li>`;
+                
+                // Page numbers (show max 5 pages)
+                let startPage = Math.max(1, currentPageNum - 2);
+                let endPage = Math.min(totalPages, startPage + 4);
+                
+                if (endPage - startPage < 4 && startPage > 1) {
+                    startPage = Math.max(1, endPage - 4);
+                }
+                
+                if (startPage > 1) {
+                    html += `<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page="1" style="font-size: 11px; padding: 4px 8px;">1</a></li>`;
+                    if (startPage > 2) {
+                        html += `<li class="page-item disabled"><span class="page-link" style="font-size: 11px; padding: 4px 8px;">...</span></li>`;
+                    }
+                }
+                
+                for (let i = startPage; i <= endPage; i++) {
+                    html += `<li class="page-item ${currentPageNum === i ? 'active' : ''}">
+                                <a class="page-link" href="javascript:void(0)" data-page="${i}" style="font-size: 11px; padding: 4px 8px;">${i}</a>
+                             </li>`;
+                }
+                
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        html += `<li class="page-item disabled"><span class="page-link" style="font-size: 11px; padding: 4px 8px;">...</span></li>`;
+                    }
+                    html += `<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page="${totalPages}" style="font-size: 11px; padding: 4px 8px;">${totalPages}</a></li>`;
+                }
+                
+                // Next button
+                html += `<li class="page-item ${currentPageNum === totalPages ? 'disabled' : ''}">
+                            <a class="page-link" href="javascript:void(0)" data-page="${currentPageNum + 1}" style="font-size: 11px; padding: 4px 8px;">»</a>
+                         </li>`;
+                
+                paginationContainer.innerHTML = html;
+                
+                // Add click event listeners to all pagination links
+                const links = paginationContainer.querySelectorAll('a.page-link[data-page]');
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const pageNum = parseInt(this.getAttribute('data-page'));
+                        if (pageNum && pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
+                            currentPage = pageNum;
+                            displayPage(currentPage);
+                        }
+                    });
+                });
+            }
+            
+            // Initialize - show first page
+            displayPage(1);
+        }
+    })();
+</script>
+                           
+{% endblock %}

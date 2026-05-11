@@ -1,0 +1,294 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Past Events | Membership Portal{% endblock %}
+
+{% block content %}
+<div class="pcoded-content">
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Past Events</h5>
+                        <p class="m-b-0">All past events and your participation status</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'membership:dashboard' %}"><i class="fa fa-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{% url 'membership:my events' %}">Past Events</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    
+                    <!-- Statistics Cards -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-block p-3">
+                                    <h3 class="m-0">{{ total_past|default:"0" }}</h3>
+                                    <p class="m-0">Total Past Events</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-block p-3">
+                                    <h3 class="m-0">{{ attended_count|default:"0" }}</h3>
+                                    <p class="m-0">Attended</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-danger text-white">
+                                <div class="card-block p-3">
+                                    <h3 class="m-0">{{ cancelled_count|default:"0" }}</h3>
+                                    <p class="m-0">Cancelled</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-secondary text-white">
+                                <div class="card-block p-3">
+                                    <h3 class="m-0">{{ not_registered_count|default:"0" }}</h3>
+                                    <p class="m-0">Not Registered</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PAST EVENTS SECTION -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h5><i class="fa fa-history"></i> Past Events</h5>
+                                </div>
+                                <div class="card-block">
+                                    
+                                    <!-- FILTER SECTION -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <form method="get" class="form-inline">
+                                                <div class="row w-100">
+                                                    <div class="col-md-4 mb-2">
+                                                        <input type="text" name="search" class="form-control form-control-sm w-100" 
+                                                               placeholder="Search event name or location..." 
+                                                               value="{{ search_query|default:'' }}">
+                                                    </div>
+                                                    <div class="col-md-2 mb-2">
+                                                        <select name="status" class="form-control form-control-sm w-100">
+                                                            <option value="">All Status</option>
+                                                            <option value="attended" {% if status_filter == 'attended' %}selected{% endif %}>Attended</option>
+                                                            <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                                                            <option value="not_registered" {% if status_filter == 'not_registered' %}selected{% endif %}>Not Registered</option>
+                                                            <option value="registered" {% if status_filter == 'registered' %}selected{% endif %}>Registered (No attendance)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-2">
+                                                        <select name="year" class="form-control form-control-sm w-100">
+                                                            <option value="">All Years</option>
+                                                            {% for year in available_years %}
+                                                                <option value="{{ year }}" {% if year_filter|add:"0" == year %}selected{% endif %}>{{ year }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-2">
+                                                        <button type="submit" class="btn btn-primary btn-sm w-100">
+                                                            <i class="fa fa-search"></i> Filter
+                                                        </button>
+                                                        <a href="{% url 'membership:my events' %}" class="btn btn-default btn-sm w-100 mt-1">Reset</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- TABLE -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Event Name</th>
+                                                    <th>Date</th>
+                                                    <th>Location</th>
+                                                    <th>Your Status</th>
+                                                    <th>Guests (You brought)</th>
+                                                    <th>Certificate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in page_obj %}
+                                                </table>
+                                                    <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+                                                    <td>
+                                                        <strong>{{ item.event.title }}</strong>
+                                                        {% if item.event.description %}
+                                                            <br><small class="text-muted">{{ item.event.description|truncatechars:50 }}</small>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ item.event.event_date|date:"d M Y" }}</td>
+                                                    <td><i class="fa fa-map-marker"></i> {{ item.event.location }}</td>
+                                                    <td>
+                                                        {% if item.status == 'attended' %}
+                                                            <span class="badge badge-success" style="font-size: 12px;">
+                                                                <i class="fa fa-check-circle"></i> {{ item.status_label }}
+                                                            </span>
+                                                        {% elif item.status == 'cancelled' %}
+                                                            <span class="badge badge-danger" style="font-size: 12px;">
+                                                                <i class="fa fa-times-circle"></i> {{ item.status_label }}
+                                                            </span>
+                                                        {% elif item.status == 'not_registered' %}
+                                                            <span class="badge badge-secondary" style="font-size: 12px;">
+                                                                <i class="fa fa-ban"></i> {{ item.status_label }}
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="badge badge-warning" style="font-size: 12px;">
+                                                                <i class="fa fa-clock-o"></i> {{ item.status_label }}
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% if item.guests > 0 %}
+                                                            {{ item.guests }}
+                                                        {% else %}
+                                                            -
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if item.status == 'attended' and item.event.file %}
+                                                            <button class="btn btn-info btn-sm" onclick="downloadCertificate({{ item.event.id }}, '{{ item.event.title|escapejs }}')">
+                                                                <i class="fa fa-download"></i> Download Certificate
+                                                            </button>
+                                                        {% elif item.status == 'attended' and not item.event.file %}
+                                                            <span class="text-muted small">Certificate not available</span>
+                                                        {% else %}
+                                                            <span class="text-muted small">-</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <td colspan="7" class="text-center text-muted py-4">
+                                                        <i class="fa fa-calendar-times-o fa-3x"></i>
+                                                        <p class="mt-2">No past events found.</p>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <!-- PAGINATION -->
+                                    {% if page_obj.has_other_pages %}
+                                    <div class="text-center mt-3">
+                                        <nav>
+                                            <ul class="pagination justify-content-center">
+                                                {% if page_obj.has_previous %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            <i class="fa fa-angle-double-left"></i> First
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            <i class="fa fa-angle-left"></i> Previous
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% for num in page_obj.paginator.page_range %}
+                                                    {% if page_obj.number == num %}
+                                                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">{{ num }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if page_obj.has_next %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            Next <i class="fa fa-angle-right"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">
+                                                            Last <i class="fa fa-angle-double-right"></i>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                        <div class="text-muted small mt-2">
+                                            Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} past events
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function downloadCertificate(eventId, eventName) {
+    window.open('/membership/download-event-certificate/' + eventId + '/', '_blank');
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+// SweetAlert for Django messages
+{% if messages %}
+    {% for message in messages %}
+        Swal.fire({
+            icon: '{% if message.tags == "success" %}success{% elif message.tags == "error" %}error{% else %}info{% endif %}',
+            title: '{% if message.tags == "success" %}Success!{% elif message.tags == "error" %}Error!{% else %}Info{% endif %}',
+            text: '{{ message }}',
+            timer: 3000,
+            width: '350px',
+            showConfirmButton: true
+        });
+    {% endfor %}
+{% endif %}
+</script>
+
+<style>
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    .badge {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    .btn-sm {
+        padding: 3px 8px;
+        font-size: 11px;
+        margin: 0 2px;
+    }
+    .pagination .page-link {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+</style>
+{% endblock %}
