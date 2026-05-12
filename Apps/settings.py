@@ -34,11 +34,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     
     'django.contrib.sites',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     
     "jazzmin",
     'django.contrib.admin',
@@ -52,7 +47,6 @@ INSTALLED_APPS = [
     'PMC',
 ]
 
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'allauth.account.middleware.AccountMiddleware',
 ]
 ROOT_URLCONF = 'Apps.urls'
 
@@ -125,32 +118,21 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 LOGIN_REDIRECT_URL = "/membership/register/"
 ACCOUNT_LOGIN_REDIRECT_URL = "/membership/register/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-SOCIALACCOUNT_LOGIN_ON_GET = True
-SOCIALACCOUNT_AUTO_SIGNUP = False
+
 ACCOUNT_SIGNUP_FORM_CLASS = None
-SOCIALACCOUNT_ADAPTER = "membership.adapter.MySocialAccountAdapter"
+
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': config('GOOGLE_CLIENT_ID'),
-            'secret': config('GOOGLE_CLIENT_SECRET'),
-            'key': ''
-        }
-    }
-}
 
 
 # Internationalization
